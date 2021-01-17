@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public enum ChargingPointType : byte
+    public class ChargingPointType : BaseEntity
     {
-        slow = 1,
-        rapid = 2,
-        fast = 3
+        public string Name { get; set; }
+        public decimal PowerRatingKW { get; set; }
     }
 }

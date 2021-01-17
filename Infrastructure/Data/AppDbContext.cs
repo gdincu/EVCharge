@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Core.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
@@ -17,6 +15,7 @@ namespace Infrastructure
 
         public DbSet<ChargingPoint> ChargingPoints { get; set; }
         public DbSet<ChargingPointLocation> ChargingPointLocations { get; set; }
+        public DbSet<ChargingPointType> ChargingPointTypes { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<User> Users { get; set; }
 

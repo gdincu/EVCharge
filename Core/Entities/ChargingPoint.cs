@@ -10,7 +10,7 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int ChargingPointLocationId { get; set; }
-        public ChargingPointType ChargingPointType { get; set; }
+        public int ChargingPointTypeId { get; set; }
         public decimal Price { get; set; }
     }
 }

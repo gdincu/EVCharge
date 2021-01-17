@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
 
-namespace EVCharge.Controllers
+namespace API.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ChargingPointsController : ControllerBase
     {
@@ -21,14 +21,14 @@ namespace EVCharge.Controllers
             _context = context;
         }
 
-        // GET: ChargingPoints
+        // GET: api/ChargingPoints
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChargingPoint>>> GetChargingPoints()
         {
             return await _context.ChargingPoints.ToListAsync();
         }
 
-        // GET: ChargingPoints/5
+        // GET: api/ChargingPoints/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ChargingPoint>> GetChargingPoint(int id)
         {
@@ -42,7 +42,7 @@ namespace EVCharge.Controllers
             return chargingPoint;
         }
 
-        // PUT: ChargingPoints/5
+        // PUT: api/ChargingPoints/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -74,7 +74,7 @@ namespace EVCharge.Controllers
             return NoContent();
         }
 
-        // POST: ChargingPoints
+        // POST: api/ChargingPoints
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -86,7 +86,7 @@ namespace EVCharge.Controllers
             return CreatedAtAction("GetChargingPoint", new { id = chargingPoint.Id }, chargingPoint);
         }
 
-        // DELETE: ChargingPoints/5
+        // DELETE: api/ChargingPoints/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChargingPoint>> DeleteChargingPoint(int id)
         {
