@@ -7,32 +7,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
+using Core.Interfaces;
 
 namespace API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BookingsController : ControllerBase
+    public class BookingsController : BaseApiController
     {
-        private readonly AppDbContext _context;
+        private readonly IGenericRepository<Booking> _bookingRepository;
 
-        public BookingsController(AppDbContext context)
+        public BookingsController(IGenericRepository<Booking> bookingRepository)
         {
-            _context = context;
+            _bookingRepository = bookingRepository;
         }
 
         // GET: Bookings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            return await _context.Bookings.ToListAsync();
+            return Ok(await _bookingRepository.GetItemsAsync());
         }
 
         // GET: Bookings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Booking>> GetBooking(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _bookingRepository.GetItemByIdAsync(id);
 
             if (booking == null)
             {
@@ -53,11 +54,9 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(booking).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _bookingRepository.UpdateItemAsync(id, booking);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,31 +79,33 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(Booking booking)
         {
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
+            _bookingRepository.CreateItemAsync(booking);
 
             return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
+
         }
 
         // DELETE: Bookings/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Booking>> DeleteBooking(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _bookingRepository.GetItemByIdAsync(id);
             if (booking == null)
             {
                 return NotFound();
             }
 
-            _context.Bookings.Remove(booking);
-            await _context.SaveChangesAsync();
+            await _bookingRepository.DeleteItemAsync(id);
 
             return booking;
         }
 
         private bool BookingExists(int id)
         {
-            return _context.Bookings.Any(e => e.Id == id);
+            if (_bookingRepository.GetItemByIdAsync(id) != null)
+                return true;
+            else
+                return false;
         }
     }
 }

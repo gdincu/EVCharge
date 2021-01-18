@@ -7,32 +7,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
+using Core.Interfaces;
+using SQLitePCL;
 
 namespace API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ChargingPointTypesController : ControllerBase
+    public class ChargingPointTypesController : BaseApiController
     {
-        private readonly AppDbContext _context;
+        private readonly IGenericRepository<ChargingPointType> _chargingPointType;
 
-        public ChargingPointTypesController(AppDbContext context)
+        public ChargingPointTypesController(IGenericRepository<ChargingPointType> chargingPointType)
         {
-            _context = context;
+            _chargingPointType = chargingPointType;
         }
 
         // GET: api/ChargingPointTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChargingPointType>>> GetChargingPointTypes()
         {
-            return await _context.ChargingPointTypes.ToListAsync();
+            return Ok(await _chargingPointType.GetItemsAsync());
         }
 
         // GET: api/ChargingPointTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ChargingPointType>> GetChargingPointType(int id)
         {
-            var chargingPointType = await _context.ChargingPointTypes.FindAsync(id);
+            var chargingPointType = await _chargingPointType.GetItemByIdAsync(id);
 
             if (chargingPointType == null)
             {
@@ -53,11 +55,9 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(chargingPointType).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _chargingPointType.UpdateItemAsync(id, chargingPointType);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +80,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ChargingPointType>> PostChargingPointType(ChargingPointType chargingPointType)
         {
-            _context.ChargingPointTypes.Add(chargingPointType);
-            await _context.SaveChangesAsync();
+            await _chargingPointType.CreateItemAsync(chargingPointType);
 
             return CreatedAtAction("GetChargingPointType", new { id = chargingPointType.Id }, chargingPointType);
         }
@@ -90,21 +89,23 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChargingPointType>> DeleteChargingPointType(int id)
         {
-            var chargingPointType = await _context.ChargingPointTypes.FindAsync(id);
+            var chargingPointType = await _chargingPointType.GetItemByIdAsync(id);
             if (chargingPointType == null)
             {
                 return NotFound();
             }
 
-            _context.ChargingPointTypes.Remove(chargingPointType);
-            await _context.SaveChangesAsync();
+            await _chargingPointType.DeleteItemAsync(id);
 
             return chargingPointType;
         }
 
         private bool ChargingPointTypeExists(int id)
         {
-            return _context.ChargingPointTypes.Any(e => e.Id == id);
+            if (_chargingPointType.GetItemByIdAsync(id) != null)
+                return true;
+            else
+                return false;
         }
     }
 }

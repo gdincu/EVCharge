@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,29 +11,55 @@ namespace Infrastructure.Data
 {
     public class BookingRepository : IGenericRepository<Booking>
     {
-        public Task<ActionResult<Booking>> CreateItemAsync(Booking entity)
+        private readonly AppDbContext _context;
+
+        public BookingRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<ActionResult<Booking>> CreateItemAsync(Booking entity)
+        {
+            _context.Bookings.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<ActionResult<Booking>> DeleteItemAsync(int id)
+        public async Task<ActionResult<Booking>> DeleteItemAsync(int id)
         {
-            throw new NotImplementedException();
+            var booking = await _context.Bookings.FindAsync(id);
+
+            _context.Bookings.Remove(booking);
+            await _context.SaveChangesAsync();
+
+            return booking;
         }
 
-        public Task<Booking> GetItemByIdAsync(int id)
+        public async Task<Booking> GetItemByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var booking = await _context.Bookings.FirstOrDefaultAsync(p => p.Id == id);
+
+            return booking;
         }
 
-        public Task<IReadOnlyList<Booking>> GetItemsAsync()
+        public async Task<IReadOnlyList<Booking>> GetItemsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Bookings.ToListAsync();
         }
 
-        public Task<ActionResult<Booking>> UpdateItemAsync(int id, Booking entity)
+        public async Task<ActionResult<Booking>> UpdateItemAsync(int id, Booking entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return entity;
         }
     }
 }

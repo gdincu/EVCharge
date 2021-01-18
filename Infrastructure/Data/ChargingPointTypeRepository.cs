@@ -1,38 +1,64 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class ChargingPointTypeRepository : IGenericRepository<Booking>
+    public class ChargingPointTypeRepository : IGenericRepository<ChargingPointType>
     {
-        public Task<ActionResult<Booking>> CreateItemAsync(Booking entity)
+        private readonly AppDbContext _context;
+
+        public ChargingPointTypeRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<ActionResult<ChargingPointType>> CreateItemAsync(ChargingPointType entity)
+        {
+            _context.ChargingPointTypes.Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task<ActionResult<Booking>> DeleteItemAsync(int id)
+        public async Task<ActionResult<ChargingPointType>> DeleteItemAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.ChargingPointTypes.FindAsync(id);
+
+            _context.ChargingPointTypes.Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return entity;
         }
 
-        public Task<Booking> GetItemByIdAsync(int id)
+        public async Task<ChargingPointType> GetItemByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.ChargingPointTypes.FirstOrDefaultAsync(p => p.Id == id);
+
+            return entity;
         }
 
-        public Task<IReadOnlyList<Booking>> GetItemsAsync()
+        public async Task<IReadOnlyList<ChargingPointType>> GetItemsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.ChargingPointTypes.ToListAsync();
         }
 
-        public Task<ActionResult<Booking>> UpdateItemAsync(int id, Booking entity)
+        public async Task<ActionResult<ChargingPointType>> UpdateItemAsync(int id, ChargingPointType entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return entity;
         }
     }
 }

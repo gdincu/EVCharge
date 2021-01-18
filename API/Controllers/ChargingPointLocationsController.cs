@@ -7,32 +7,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
+using Core.Interfaces;
 
 namespace API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ChargingPointLocationsController : ControllerBase
+    public class ChargingPointLocationsController : BaseApiController
     {
-        private readonly AppDbContext _context;
+        private readonly IGenericRepository<ChargingPointLocation> _chargingPointLocation;
 
-        public ChargingPointLocationsController(AppDbContext context)
+        public ChargingPointLocationsController(IGenericRepository<ChargingPointLocation> chargingPointLocation)
         {
-            _context = context;
+            _chargingPointLocation = chargingPointLocation;
         }
 
         // GET: ChargingPointLocations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ChargingPointLocation>>> GetChargingPointLocations()
         {
-            return await _context.ChargingPointLocations.ToListAsync();
+            return Ok(await _chargingPointLocation.GetItemsAsync());
         }
 
         // GET: ChargingPointLocations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ChargingPointLocation>> GetChargingPointLocation(int id)
         {
-            var chargingPointLocation = await _context.ChargingPointLocations.FindAsync(id);
+            var chargingPointLocation = await _chargingPointLocation.GetItemByIdAsync(id);
 
             if (chargingPointLocation == null)
             {
@@ -53,11 +54,9 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(chargingPointLocation).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _chargingPointLocation.UpdateItemAsync(id, chargingPointLocation);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +79,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ChargingPointLocation>> PostChargingPointLocation(ChargingPointLocation chargingPointLocation)
         {
-            _context.ChargingPointLocations.Add(chargingPointLocation);
-            await _context.SaveChangesAsync();
+            await _chargingPointLocation.CreateItemAsync(chargingPointLocation);
 
             return CreatedAtAction("GetChargingPointLocation", new { id = chargingPointLocation.Id }, chargingPointLocation);
         }
@@ -90,21 +88,23 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChargingPointLocation>> DeleteChargingPointLocation(int id)
         {
-            var chargingPointLocation = await _context.ChargingPointLocations.FindAsync(id);
+            var chargingPointLocation = await _chargingPointLocation.GetItemByIdAsync(id);
             if (chargingPointLocation == null)
             {
                 return NotFound();
             }
 
-            _context.ChargingPointLocations.Remove(chargingPointLocation);
-            await _context.SaveChangesAsync();
+            await _chargingPointLocation.DeleteItemAsync(id);
 
             return chargingPointLocation;
         }
 
         private bool ChargingPointLocationExists(int id)
         {
-            return _context.ChargingPointLocations.Any(e => e.Id == id);
+            if (_chargingPointLocation.GetItemByIdAsync(id) != null)
+                return true;
+            else
+                return false;
         }
     }
 }

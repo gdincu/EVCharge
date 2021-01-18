@@ -42,6 +42,9 @@ namespace EVCharge
 
             services.AddScoped<IGenericRepository<ChargingPoint>, ChargingPointRepository>();
             services.AddScoped<IGenericRepository<User>, UserRepository>();
+            services.AddScoped<IGenericRepository<Booking>, BookingRepository>();
+            services.AddScoped<IGenericRepository<ChargingPointLocation>, ChargingPointLocationRepository>();
+            services.AddScoped<IGenericRepository<ChargingPointType>, ChargingPointTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
