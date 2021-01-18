@@ -17,6 +17,12 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
+
+        public Task<int> CountAsync(ISpecification<ChargingPointLocation> spec)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ActionResult<ChargingPointLocation>> CreateItemAsync(ChargingPointLocation entity)
         {
             _context.ChargingPointLocations.Add(entity);
@@ -34,6 +40,11 @@ namespace Infrastructure.Data
             return entity;
         }
 
+        public Task<ChargingPointLocation> GetEntityWithSpec(ISpecification<ChargingPointLocation> spec)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ChargingPointLocation> GetItemByIdAsync(int id)
         {
             var entity = await _context.ChargingPointLocations.FirstOrDefaultAsync(p => p.Id == id);
@@ -44,6 +55,11 @@ namespace Infrastructure.Data
         public async Task<IReadOnlyList<ChargingPointLocation>> GetItemsAsync()
         {
             return await _context.ChargingPointLocations.ToListAsync();
+        }
+
+        public Task<IReadOnlyList<ChargingPointLocation>> ListAsync(ISpecification<ChargingPointLocation> spec)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ActionResult<ChargingPointLocation>> UpdateItemAsync(int id, ChargingPointLocation entity)

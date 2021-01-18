@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
 using Core.Interfaces;
+using Core.Specifications;
 
 namespace API.Controllers
 {
@@ -26,7 +27,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            return Ok(await _bookingRepository.GetItemsAsync());
+            var tempParams = new ChargingPointParams();
+            var spec = new ChargingPointsWithTypesAndLocationsSpecification(tempParams);
+            var bookings = await _bookingRepository.ListAsync(spec);
+            return Ok(bookings);
         }
 
         // GET: Bookings/5

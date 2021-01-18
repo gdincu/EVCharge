@@ -17,6 +17,12 @@ namespace Infrastructure.Data
         {
             _context = context;
         }
+
+        public Task<int> CountAsync(ISpecification<Booking> spec)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ActionResult<Booking>> CreateItemAsync(Booking entity)
         {
             _context.Bookings.Add(entity);
@@ -34,6 +40,11 @@ namespace Infrastructure.Data
             return booking;
         }
 
+        public Task<Booking> GetEntityWithSpec(ISpecification<Booking> spec)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Booking> GetItemByIdAsync(int id)
         {
             return await _context.Bookings.FirstOrDefaultAsync(p => p.Id == id);
@@ -42,6 +53,13 @@ namespace Infrastructure.Data
         public async Task<IReadOnlyList<Booking>> GetItemsAsync()
         {
             return await _context.Bookings.ToListAsync();
+        }
+
+        public Task<IReadOnlyList<Booking>> ListAsync(ISpecification<Booking> spec)
+        {
+            throw new NotImplementedException();
+
+
         }
 
         public async Task<ActionResult<Booking>> UpdateItemAsync(int id, Booking entity)

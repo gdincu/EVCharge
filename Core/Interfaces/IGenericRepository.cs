@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,5 +13,8 @@ namespace Core.Interfaces
         Task<ActionResult<T>> UpdateItemAsync(int id, T entity);
         Task<ActionResult<T>> CreateItemAsync(T entity);
         Task<ActionResult<T>> DeleteItemAsync(int id);
+        Task<T> GetEntityWithSpec(ISpecification<T> spec);
+        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        Task<int> CountAsync(ISpecification<T> spec);
     }
 }
