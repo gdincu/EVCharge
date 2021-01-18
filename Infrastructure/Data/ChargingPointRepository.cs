@@ -1,14 +1,13 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public class ChargingPointRepository : IChargingPointRepository
+    public class ChargingPointRepository : IGenericRepository<ChargingPoint>
     {
         private readonly AppDbContext _context;
 
@@ -17,30 +16,51 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public async Task<IReadOnlyList<ChargingPoint>> GetChargingPointsAsync()
+        public async Task<ActionResult<ChargingPoint>> CreateItemAsync(ChargingPoint chargingPoint)
         {
-            return await _context.ChargingPoints
-                .Include(p => p.ChargingPointLocationId)
-                .Include(p => p.ChargingPointTypeId)
-                .ToListAsync();
+            _context.ChargingPoints.Add(chargingPoint);
+            await _context.SaveChangesAsync();
+            return chargingPoint;
         }
 
-        public async Task<ChargingPoint> GetChargingPointByIdAsync(int id)
+        public async Task<ActionResult<ChargingPoint>> DeleteItemAsync(int id)
         {
-            return await _context.ChargingPoints
-                .Include(p => p.ChargingPointLocationId)
-                .Include(p => p.ChargingPointTypeId)
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var chargingPoint = await _context.ChargingPoints.FindAsync(id);
+            
+            _context.ChargingPoints.Remove(chargingPoint);
+            await _context.SaveChangesAsync();
+
+            return chargingPoint;
         }
 
-        public async Task<IReadOnlyList<ChargingPointLocation>> GetChargingPointLocationsAsync()
+        public async Task<ChargingPoint> GetItemByIdAsync(int id)
         {
-            return await _context.ChargingPointLocations.ToListAsync();
+            var chargingPoint = await _context.ChargingPoints
+                                      .FirstOrDefaultAsync(p => p.Id == id);
+
+            return chargingPoint;
         }
 
-        public async Task<IReadOnlyList<ChargingPointType>> GetChargingPointTypesAsync()
+        public async Task<IReadOnlyList<ChargingPoint>> GetItemsAsync()
         {
-            return await _context.ChargingPointTypes.ToListAsync();
+            return await _context.ChargingPoints.ToListAsync();
         }
+
+        public async Task<ActionResult<ChargingPoint>> UpdateItemAsync(int id, ChargingPoint chargingPoint)
+        {
+           _context.Entry(chargingPoint).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return chargingPoint;
+        }
+
     }
 }

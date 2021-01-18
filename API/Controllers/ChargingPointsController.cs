@@ -7,32 +7,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
+using Core.Interfaces;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class ChargingPointsController : ControllerBase
+    public class ChargingPointsController : BaseApiController
     {
-        private readonly AppDbContext _context;
+        private readonly IGenericRepository<ChargingPoint> _chargingPointRepository;
 
-        public ChargingPointsController(AppDbContext context)
+        public ChargingPointsController(IGenericRepository<ChargingPoint> chargingPointRepository)
         {
-            _context = context;
+            _chargingPointRepository = chargingPointRepository;
         }
 
         // GET: api/ChargingPoints
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChargingPoint>>> GetChargingPoints()
+        public async Task<IReadOnlyList<ChargingPoint>> GetChargingPoints()
         {
-            return await _context.ChargingPoints.ToListAsync();
+            return await _chargingPointRepository.GetItemsAsync();
         }
 
         // GET: api/ChargingPoints/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ChargingPoint>> GetChargingPoint(int id)
         {
-            var chargingPoint = await _context.ChargingPoints.FindAsync(id);
+            var chargingPoint = await _chargingPointRepository.GetItemByIdAsync(id);
 
             if (chargingPoint == null)
             {
@@ -53,25 +54,10 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(chargingPoint).State = EntityState.Modified;
+            var updatedChargingPoint = await _chargingPointRepository.UpdateItemAsync(id,chargingPoint);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ChargingPointExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return Ok(updatedChargingPoint);
 
-            return NoContent();
         }
 
         // POST: api/ChargingPoints
@@ -80,31 +66,22 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ChargingPoint>> PostChargingPoint(ChargingPoint chargingPoint)
         {
-            _context.ChargingPoints.Add(chargingPoint);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChargingPoint", new { id = chargingPoint.Id }, chargingPoint);
+            await _chargingPointRepository.CreateItemAsync(chargingPoint);
+
+            return Ok(chargingPoint);
+
         }
 
         // DELETE: api/ChargingPoints/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ChargingPoint>> DeleteChargingPoint(int id)
         {
-            var chargingPoint = await _context.ChargingPoints.FindAsync(id);
-            if (chargingPoint == null)
-            {
-                return NotFound();
-            }
+            ChargingPoint deletedChargingPoint = _chargingPointRepository.GetItemByIdAsync(id).Result;
+            await _chargingPointRepository.DeleteItemAsync(id);
+            return deletedChargingPoint;
 
-            _context.ChargingPoints.Remove(chargingPoint);
-            await _context.SaveChangesAsync();
-
-            return chargingPoint;
         }
 
-        private bool ChargingPointExists(int id)
-        {
-            return _context.ChargingPoints.Any(e => e.Id == id);
-        }
     }
 }

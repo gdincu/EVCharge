@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
+using Core.Interfaces;
+using API.Controllers;
+using Infrastructure.Data;
 
 namespace EVCharge
 {
@@ -36,6 +39,9 @@ namespace EVCharge
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
+
+            services.AddScoped<IGenericRepository<ChargingPoint>, ChargingPointRepository>();
+            services.AddScoped<IGenericRepository<User>, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

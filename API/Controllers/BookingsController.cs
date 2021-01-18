@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
 
-namespace EVCharge.Controllers
+namespace API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
