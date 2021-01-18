@@ -40,11 +40,12 @@ namespace EVCharge
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
 
-            services.AddScoped<IGenericRepository<ChargingPoint>, ChargingPointRepository>();
-            services.AddScoped<IGenericRepository<User>, UserRepository>();
-            services.AddScoped<IGenericRepository<Booking>, BookingRepository>();
-            services.AddScoped<IGenericRepository<ChargingPointLocation>, ChargingPointLocationRepository>();
-            services.AddScoped<IGenericRepository<ChargingPointType>, ChargingPointTypeRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            /*The above is used to replace
+             * services.AddScoped<IGenericRepository<ChargingPoint>, ChargingPointRepository>();
+             */
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

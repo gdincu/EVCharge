@@ -36,9 +36,7 @@ namespace Infrastructure.Data
 
         public async Task<Booking> GetItemByIdAsync(int id)
         {
-            var booking = await _context.Bookings.FirstOrDefaultAsync(p => p.Id == id);
-
-            return booking;
+            return await _context.Bookings.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IReadOnlyList<Booking>> GetItemsAsync()
