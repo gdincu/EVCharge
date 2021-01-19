@@ -27,10 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            var tempParams = new ChargingPointParams();
-            var spec = new ChargingPointsWithTypesAndLocationsSpecification(tempParams);
-            var bookings = await _bookingRepository.ListAsync(spec);
-            return Ok(bookings);
+            return Ok(await _bookingRepository.GetItemsAsync());
         }
 
         // GET: Bookings/5

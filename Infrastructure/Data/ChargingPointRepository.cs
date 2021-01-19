@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
@@ -16,9 +17,9 @@ namespace Infrastructure.Data
             _context = context;
         }
 
-        public Task<int> CountAsync(ISpecification<ChargingPoint> spec)
+        public async Task<int> CountAsync(ISpecification<ChargingPoint> spec)
         {
-            throw new System.NotImplementedException();
+            return await ApplySpecification(spec).CountAsync();
         }
 
         public async Task<ActionResult<ChargingPoint>> CreateItemAsync(ChargingPoint chargingPoint)
@@ -38,9 +39,9 @@ namespace Infrastructure.Data
             return chargingPoint;
         }
 
-        public Task<ChargingPoint> GetEntityWithSpec(ISpecification<ChargingPoint> spec)
+        public async Task<ChargingPoint> GetEntityWithSpec(ISpecification<ChargingPoint> spec)
         {
-            throw new System.NotImplementedException();
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
 
         public async Task<ChargingPoint> GetItemByIdAsync(int id)
@@ -56,9 +57,9 @@ namespace Infrastructure.Data
             return await _context.ChargingPoints.ToListAsync();
         }
 
-        public Task<IReadOnlyList<ChargingPoint>> ListAsync(ISpecification<ChargingPoint> spec)
+        public async Task<IReadOnlyList<ChargingPoint>> ListAsync(ISpecification<ChargingPoint> spec)
         {
-            throw new System.NotImplementedException();
+            return await ApplySpecification(spec).ToListAsync();
         }
 
         public async Task<ActionResult<ChargingPoint>> UpdateItemAsync(int id, ChargingPoint chargingPoint)
@@ -75,6 +76,11 @@ namespace Infrastructure.Data
             }
 
             return chargingPoint;
+        }
+
+        public IQueryable<ChargingPoint> ApplySpecification(ISpecification<ChargingPoint> spec)
+        {
+            return SpecificationEvaluator<ChargingPoint>.GetQuery(_context.Set<ChargingPoint>().AsQueryable(), spec);
         }
 
     }
