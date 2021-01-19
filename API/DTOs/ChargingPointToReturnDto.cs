@@ -1,3 +1,4 @@
+using Core.Entities;
 using System.Collections.Generic;
 
 namespace API.Dtos
@@ -8,7 +9,7 @@ namespace API.Dtos
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public int ChargingPointLocation { get; set; }
-        public int ChargingPointType { get; set; }
+        public string ChargingPointLocation { get; set; }
+        public string ChargingPointType { get; set; }
     }
 }
