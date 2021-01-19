@@ -8,6 +8,7 @@ using API.Errors;
 using AutoMapper;
 using API.Dtos;
 using API.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Controllers
 {
@@ -49,16 +50,19 @@ namespace API.Controllers
 
         // GET: api/ChargingPoints/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ChargingPoint>> GetChargingPoint(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ChargingPointToReturnDto>> GetChargingPoint(int id)
         {
-            var chargingPoint = await _chargingPointRepository.GetItemByIdAsync(id);
+            var spec = new ChargingPointsWithTypesAndLocationsSpecification(id);
+            var chargingPoint = await _chargingPointRepository.GetEntityWithSpec(spec);
 
             if (chargingPoint == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
-            return chargingPoint;
+            return _mapper.Map<ChargingPoint, ChargingPointToReturnDto>(chargingPoint);
         }
 
         // PUT: api/ChargingPoints/5
