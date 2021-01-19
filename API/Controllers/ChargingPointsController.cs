@@ -20,9 +20,15 @@ namespace API.Controllers
         private readonly IGenericRepository<ChargingPointLocation> _chargingPointLocationRepository;
         private readonly IMapper _mapper;
 
-        public ChargingPointsController(IGenericRepository<ChargingPoint> chargingPointRepository)
+        public ChargingPointsController(IGenericRepository<ChargingPoint> chargingPointRepository, 
+            IGenericRepository<ChargingPointType> chargingPointTypeRepository,
+            IGenericRepository<ChargingPointLocation> chargingPointLocationRepository,
+            IMapper mapper)
         {
             _chargingPointRepository = chargingPointRepository;
+            _chargingPointLocationRepository = chargingPointLocationRepository;
+            _chargingPointTypeRepository = chargingPointTypeRepository;
+            _mapper = mapper;
         }
 
         // GET: api/ChargingPoints

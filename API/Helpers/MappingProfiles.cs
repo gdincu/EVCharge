@@ -9,6 +9,7 @@ namespace API.Helpers
         public MappingProfiles() 
         {
             CreateMap<ChargingPoint, ChargingPointToReturnDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.ChargingPointLocation, o => o.MapFrom(s => s.ChargingPointLocation.Name))
                 .ForMember(d => d.ChargingPointType, o => o.MapFrom(s => s.ChargingPointType.Name));
         }

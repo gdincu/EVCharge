@@ -16,6 +16,8 @@ using Infrastructure;
 using Core.Interfaces;
 using API.Controllers;
 using Infrastructure.Data;
+using AutoMapper;
+using API.Helpers;
 
 namespace EVCharge
 {
@@ -39,6 +41,8 @@ namespace EVCharge
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
+
+            services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
             /*The above is used to replace

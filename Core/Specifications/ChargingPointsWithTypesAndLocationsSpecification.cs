@@ -5,15 +5,14 @@ namespace Core.Specifications
 #nullable enable
     public class ChargingPointsWithTypesAndLocationsSpecification : BaseSpecification<ChargingPoint>
     {
-
         public ChargingPointsWithTypesAndLocationsSpecification(ChargingPointParams parameters) : base(x => (
             (string.IsNullOrEmpty(parameters.Search) || x.Name.ToLower().Contains(parameters.Search)) &&
             (!parameters.LocationId.HasValue || x.ChargingPointLocationId == parameters.LocationId) &&
             (!parameters.TypeId.HasValue || x.ChargingPointTypeId == parameters.TypeId)
           ))
         {
-            AddInclude(x => x.ChargingPointTypeId);
-            AddInclude(x => x.ChargingPointLocationId);
+            AddInclude(x => x.ChargingPointType);
+            AddInclude(x => x.ChargingPointLocation);
             AddOrderBy(x => x.Name);
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1),parameters.PageSize);
 
@@ -23,17 +22,17 @@ namespace Core.Specifications
                 {
                     //Order by location
                     case "locationasc":
-                        AddOrderBy(x => x.ChargingPointLocationId);
+                        AddOrderBy(x => x.ChargingPointLocation.Name);
                         break;
                     case "locationdesc":
-                        AddOrderByDescending(x => x.ChargingPointLocationId);
+                        AddOrderByDescending(x => x.ChargingPointLocation.Name);
                         break;
                     //Order by type
                     case "typeasc":
-                        AddOrderBy(x => x.ChargingPointTypeId);
+                        AddOrderBy(x => x.ChargingPointType.Name);
                         break;
                     case "typedesc":
-                        AddOrderByDescending(x => x.ChargingPointTypeId);
+                        AddOrderByDescending(x => x.ChargingPointType.Name);
                         break;
                     //Order by price
                     case "priceasc":
@@ -52,8 +51,8 @@ namespace Core.Specifications
 
         public ChargingPointsWithTypesAndLocationsSpecification(int id) : base(x => x.Id == id)
         {
-            AddInclude(x => x.ChargingPointTypeId);
-            AddInclude(x => x.ChargingPointLocationId);
+            AddInclude(x => x.ChargingPointType);
+            AddInclude(x => x.ChargingPointLocation);
         }
     }
 #nullable restore

@@ -46,15 +46,19 @@ namespace Infrastructure.Data
 
         public async Task<ChargingPoint> GetItemByIdAsync(int id)
         {
-            var chargingPoint = await _context.ChargingPoints
-                                      .FirstOrDefaultAsync(p => p.Id == id);
-
-            return chargingPoint;
+            return await _context.ChargingPoints
+                .Include(p => p.ChargingPointLocation)
+                .Include(p => p.ChargingPointType)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IReadOnlyList<ChargingPoint>> GetItemsAsync()
         {
-            return await _context.ChargingPoints.ToListAsync();
+
+            return await _context.ChargingPoints
+                .Include(p => p.ChargingPointLocation)
+                .Include(p => p.ChargingPointType)
+                .ToListAsync();
         }
 
         public async Task<IReadOnlyList<ChargingPoint>> ListAsync(ISpecification<ChargingPoint> spec)
@@ -81,6 +85,16 @@ namespace Infrastructure.Data
         public IQueryable<ChargingPoint> ApplySpecification(ISpecification<ChargingPoint> spec)
         {
             return SpecificationEvaluator<ChargingPoint>.GetQuery(_context.Set<ChargingPoint>().AsQueryable(), spec);
+        }
+
+        public async Task<IReadOnlyList<ChargingPointLocation>> GetChargingPointLocationsAsync()
+        {
+            return await _context.ChargingPointLocations.ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<ChargingPointType>> GetChargingPointTypesAsync()
+        {
+            return await _context.ChargingPointTypes.ToListAsync();
         }
 
     }
