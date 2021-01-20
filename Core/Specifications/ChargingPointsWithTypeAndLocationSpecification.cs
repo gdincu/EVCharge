@@ -3,9 +3,9 @@
 namespace Core.Specifications
 {
 #nullable enable
-    public class ChargingPointsWithTypesAndLocationsSpecification : BaseSpecification<ChargingPoint>
+    public class ChargingPointsWithTypeAndLocationSpecification : BaseSpecification<ChargingPoint>
     {
-        public ChargingPointsWithTypesAndLocationsSpecification(ChargingPointParams parameters) : base(x => (
+        public ChargingPointsWithTypeAndLocationSpecification(ChargingPointParams parameters) : base(x => (
             (string.IsNullOrEmpty(parameters.Search) || x.Name.ToLower().Contains(parameters.Search)) &&
             (!parameters.LocationId.HasValue || x.ChargingPointLocationId == parameters.LocationId) &&
             (!parameters.TypeId.HasValue || x.ChargingPointTypeId == parameters.TypeId)
@@ -49,7 +49,7 @@ namespace Core.Specifications
             }
         }
 
-        public ChargingPointsWithTypesAndLocationsSpecification(int id) : base(x => x.Id == id)
+        public ChargingPointsWithTypeAndLocationSpecification(int id) : base(x => x.Id == id)
         {
             AddInclude(x => x.ChargingPointType);
             AddInclude(x => x.ChargingPointLocation);

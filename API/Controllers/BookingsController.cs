@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
-using Infrastructure;
 using Core.Interfaces;
-using Core.Specifications;
 using API.Errors;
+using Core.Specifications;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -26,9 +24,16 @@ namespace API.Controllers
 
         // GET: Bookings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings([FromQuery]BookingParams parameters)
         {
-            return Ok(await _bookingRepository.GetItemsAsync());
+            var spec = new BookingWithDatesSpecification(parameters);
+            var countSpec = new BookingWithFiltersForCountSpecificication(parameters);
+            var totalItems = await _bookingRepository.CountAsync(countSpec);
+            var bookings = await _bookingRepository.ListAsync(spec);
+
+            if (bookings == null) return NotFound(new ApiResponse(404));
+
+            return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
         }
 
         // GET: Bookings/5

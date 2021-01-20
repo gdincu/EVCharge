@@ -36,7 +36,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<Pagination<ChargingPointToReturnDto>>> GetChargingPoints([FromQuery]ChargingPointParams parameters)
         {
-            var spec = new ChargingPointsWithTypesAndLocationsSpecification(parameters);
+            var spec = new ChargingPointsWithTypeAndLocationSpecification(parameters);
             var countSpec = new ChargingPointWithFiltersCount(parameters);
             var totalItems = await _chargingPointRepository.CountAsync(countSpec);
             var chargingPoints = await _chargingPointRepository.ListAsync(spec);
@@ -54,7 +54,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ChargingPointToReturnDto>> GetChargingPoint(int id)
         {
-            var spec = new ChargingPointsWithTypesAndLocationsSpecification(id);
+            var spec = new ChargingPointsWithTypeAndLocationSpecification(id);
             var chargingPoint = await _chargingPointRepository.GetEntityWithSpec(spec);
 
             if (chargingPoint == null)

@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Client",
-    "\\Client\\e2e\\src",
-    "\\Client\\src\\environments"
+    ""
   ],
-  "SelectedNode": "\\Client\\package.json",
+  "SelectedNode": "\\Client",
   "PreviewInSolutionExplorer": false
 }
