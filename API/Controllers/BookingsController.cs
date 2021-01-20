@@ -8,6 +8,8 @@ using Core.Interfaces;
 using API.Errors;
 using Core.Specifications;
 using API.Helpers;
+using System.Linq;
+using System;
 
 namespace API.Controllers
 {
@@ -26,14 +28,50 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Booking>>> GetBookings([FromQuery]BookingParams parameters)
         {
+            if (parameters is null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var spec = new BookingWithDatesSpecification(parameters);
             var countSpec = new BookingWithFiltersForCountSpecificication(parameters);
             var totalItems = await _bookingRepository.CountAsync(countSpec);
             var bookings = await _bookingRepository.ListAsync(spec);
 
+            //Filters results by start and end dates
+            DateTime? startDate = Convert.ToDateTime(parameters.StartDate);
+            DateTime? endDate = Convert.ToDateTime(parameters.EndDate);
+
             if (bookings == null) return NotFound(new ApiResponse(404));
 
+            //Default Scenario without any StartDate or EndDate parameters
+            if (string.IsNullOrEmpty(parameters.StartDate) && string.IsNullOrEmpty(parameters.EndDate))
+                return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
+
+            //Scenario where the StartDate is set while the EndDate is not
+            if (startDate != null && string.IsNullOrEmpty(parameters.EndDate))
+            {
+                bookings = bookings.Where(f => f.Start >= startDate).ToList();
+                return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
+            }
+
+            //Scenario where both the StartDate and EndDate parameters are set
+            if (startDate != null && endDate != null)
+            {
+                bookings = bookings.Where(f => startDate <= f.Start && endDate >= f.End).ToList();
+                return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
+            }
+
+            //Scenario where the EndDate is set while the StartDate is not
+            if (endDate != null && string.IsNullOrEmpty(parameters.StartDate))
+            { 
+                bookings = bookings.Where(f => endDate >= f.End).ToList();
+                return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
+            }
+            
+
             return Ok(new Pagination<Booking>(parameters.PageIndex, parameters.PageSize, totalItems, bookings));
+
         }
 
         // GET: Bookings/5

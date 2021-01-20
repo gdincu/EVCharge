@@ -16,8 +16,8 @@ namespace Core.Specifications
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
 
-        public DateTime? Start { get; set; }
-        public DateTime? End { get; set; }
+        public String? StartDate { get; set; }
+        public String? EndDate { get; set; }
 
         public string Sort { get; set; }
 

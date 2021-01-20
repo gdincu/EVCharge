@@ -2,16 +2,11 @@
 
 namespace Core.Specifications
 {
+#nullable enable
     public class BookingWithDatesSpecification : BaseSpecification<Booking>
     {
-        public BookingWithDatesSpecification(BookingParams parameters) : base(x => (
-            (string.IsNullOrEmpty(parameters.Search) || x.Start.Date.ToString().ToLower().Contains(parameters.Search)) &&
-            (!parameters.Start.HasValue || x.Start.ToString() == parameters.Start.ToString()) &&
-            (!parameters.End.HasValue || x.End.ToString() == parameters.End.ToString())
-          ))
-        {
-            //AddInclude(x => x.Start.Date);
-            //AddInclude(x => x.End.Date);
+        public BookingWithDatesSpecification(BookingParams parameters) {
+            
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
 
             if (!string.IsNullOrEmpty(parameters.Sort))
@@ -42,8 +37,9 @@ namespace Core.Specifications
 
         public BookingWithDatesSpecification(int id) : base(x => x.Id == id)
         {
-            AddInclude(x => x.Start.Date);
-            AddInclude(x => x.End.Date);
+            AddInclude(x => x.Start.ToString());
+            AddInclude(x => x.End.ToString());
         }
     }
+#nullable restore
 }
