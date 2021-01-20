@@ -9,6 +9,7 @@ using Core.Entities;
 using Infrastructure;
 using Core.Interfaces;
 using Core.Specifications;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -32,13 +33,15 @@ namespace API.Controllers
 
         // GET: Bookings/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Booking>> GetBooking(int id)
         {
             var booking = await _bookingRepository.GetItemByIdAsync(id);
 
             if (booking == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             return booking;

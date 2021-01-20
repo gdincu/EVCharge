@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Http;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -27,13 +29,15 @@ namespace API.Controllers
 
         // GET: Users/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _userRepository.GetItemByIdAsync(id);
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             return user;

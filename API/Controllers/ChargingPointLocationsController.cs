@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Entities;
 using Infrastructure;
 using Core.Interfaces;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -31,13 +32,15 @@ namespace API.Controllers
 
         // GET: ChargingPointLocations/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ChargingPointLocation>> GetChargingPointLocation(int id)
         {
             var chargingPointLocation = await _chargingPointLocation.GetItemByIdAsync(id);
 
             if (chargingPointLocation == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             return chargingPointLocation;

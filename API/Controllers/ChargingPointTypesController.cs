@@ -9,6 +9,7 @@ using Core.Entities;
 using Infrastructure;
 using Core.Interfaces;
 using SQLitePCL;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -32,13 +33,15 @@ namespace API.Controllers
 
         // GET: api/ChargingPointTypes/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ChargingPointType>> GetChargingPointType(int id)
         {
             var chargingPointType = await _chargingPointType.GetItemByIdAsync(id);
 
             if (chargingPointType == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             return chargingPointType;
