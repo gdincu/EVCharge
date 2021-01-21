@@ -18,10 +18,14 @@ namespace API.Controllers
     public class BookingsController : BaseApiController
     {
         private readonly IGenericRepository<Booking> _bookingRepository;
+        private readonly IGenericRepository<ChargingPoint> _chargingPointRepository;
 
-        public BookingsController(IGenericRepository<Booking> bookingRepository)
+        public BookingsController(IGenericRepository<Booking> bookingRepository,
+            IGenericRepository<ChargingPoint> chargingPointRepository
+            )
         {
             _bookingRepository = bookingRepository;
+            _chargingPointRepository = chargingPointRepository;
         }
 
         // GET: Bookings
@@ -88,6 +92,17 @@ namespace API.Controllers
             }
 
             return booking;
+        }
+
+        // GET: Bookings/5
+        [HttpGet("{id}/chargingpoint")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ChargingPoint> GetChargingPointByBooking(int id)
+        {
+            var tempId = _bookingRepository.GetItemByIdAsync(id).Result.ChargingPointId;
+            return await _chargingPointRepository.GetItemByIdAsync(tempId);
+            
         }
 
         // PUT: Bookings/5

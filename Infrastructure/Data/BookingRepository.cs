@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data
@@ -47,7 +47,11 @@ namespace Infrastructure.Data
 
         public async Task<Booking> GetItemByIdAsync(int id)
         {
-            return await _context.Bookings.FirstOrDefaultAsync(p => p.Id == id);
+            
+
+            return await _context.Bookings
+                .FirstOrDefaultAsync(p => p.Id == id);
+                      
         }
 
         public async Task<IReadOnlyList<Booking>> GetItemsAsync()
