@@ -1,3 +1,9 @@
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/node-modules
+ssl
 obj
 bin
 *.db
