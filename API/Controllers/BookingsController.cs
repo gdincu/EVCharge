@@ -19,13 +19,16 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<Booking> _bookingRepository;
         private readonly IGenericRepository<ChargingPoint> _chargingPointRepository;
+        private readonly IGenericRepository<User> _userRepository;
 
         public BookingsController(IGenericRepository<Booking> bookingRepository,
-            IGenericRepository<ChargingPoint> chargingPointRepository
+            IGenericRepository<ChargingPoint> chargingPointRepository,
+            IGenericRepository<User> userRepository
             )
         {
             _bookingRepository = bookingRepository;
             _chargingPointRepository = chargingPointRepository;
+            _userRepository = userRepository;
         }
 
         // GET: Bookings
@@ -94,15 +97,24 @@ namespace API.Controllers
             return booking;
         }
 
-        // GET: Bookings/5
+        // GET: Bookings/5/chargingpoint -> returns the chargingpoint based on booking id
         [HttpGet("{id}/chargingpoint")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ChargingPoint> GetChargingPointByBooking(int id)
         {
             var tempId = _bookingRepository.GetItemByIdAsync(id).Result.ChargingPointId;
-            return await _chargingPointRepository.GetItemByIdAsync(tempId);
-            
+            return await _chargingPointRepository.GetItemByIdAsync(tempId);    
+        }
+
+        // GET: Bookings/5/chargingpoint -> returns the chargingpoint based on booking id
+        [HttpGet("{id}/user")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<User> GetUserByBooking(int id)
+        {
+            var tempId = _bookingRepository.GetItemByIdAsync(id).Result.UserId;
+            return await _userRepository.GetItemByIdAsync(tempId);
         }
 
         // PUT: Bookings/5

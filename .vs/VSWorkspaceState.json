@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Client\\src"
+    "\\Client",
+    "\\Client\\src",
+    "\\Client\\src\\app",
+    "\\Client\\src\\app\\shared",
+    "\\Client\\src\\app\\store"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\Client\\src\\app\\store\\store.service.ts",
   "PreviewInSolutionExplorer": false
 }

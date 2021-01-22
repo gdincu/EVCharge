@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { StoreModule } from './store/store.module';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,12 @@ import { StoreModule } from './store/store.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot({ extras: { lazyRender: true } }),
+    FormlyBootstrapModule
   ],
-  providers: [],
+  providers: [HttpClientModule, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,7 +9,7 @@ import { IPagination } from '../shared/models/pagination';
   providedIn: 'root'
 })
 export class StoreService {
-  baseUrl = 'https://localhost:44313/';
+  baseUrl = 'https://localhost:5001/';
 
   constructor(private http: HttpClient) { }
 
