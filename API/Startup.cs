@@ -8,6 +8,7 @@ using AutoMapper;
 using API.Helpers;
 using API.Middleware;
 using API.Extensions;
+using Infrastructure.Identity;
 
 namespace EVCharge
 {
@@ -27,6 +28,8 @@ namespace EVCharge
             services.AddControllers();
 
             services.AddDbContext<AppDbContext>(x => x.UseSqlite(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlite(_configuration.GetConnectionString("IdentityConnection")));
 
             services.AddApplicationServices();
 

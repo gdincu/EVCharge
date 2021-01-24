@@ -6,6 +6,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using API.Errors;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -105,6 +106,14 @@ namespace API.Controllers
             await _userRepository.DeleteItemAsync(id);
 
             return user;
+        }
+
+        [HttpGet("usernameexists")]
+        public bool CheckUsernameExists([FromQuery] string username)
+        {
+            bool result =  _userRepository.GetItemsAsync().Result.FirstOrDefault(p => p.UserName == username) != null;
+            return result;
+
         }
 
     }
