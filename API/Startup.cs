@@ -10,7 +10,7 @@ using API.Middleware;
 using API.Extensions;
 using Infrastructure.Identity;
 
-namespace EVCharge
+namespace API
 {
     public class Startup
     {
@@ -32,6 +32,8 @@ namespace EVCharge
             services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlite(_configuration.GetConnectionString("IdentityConnection")));
 
             services.AddApplicationServices();
+
+            services.AddIdentityServices(_configuration);
 
             services.AddSwaggerDocumentation();
 

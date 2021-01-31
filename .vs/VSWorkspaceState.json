@@ -1,13 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Client",
-    "\\Client\\e2e\\src",
-    "\\Client\\src",
+    "\\API\\Extensions",
     "\\Client\\src\\app",
+    "\\Client\\src\\app\\account",
+    "\\Client\\src\\app\\account\\register",
     "\\Client\\src\\app\\store",
-    "\\Core\\Entities"
+    "\\Infrastructure\\Data"
   ],
-  "SelectedNode": "\\Client\\src\\app\\store\\stepper.type.ts",
+  "SelectedNode": "\\Client",
   "PreviewInSolutionExplorer": false
 }
