@@ -73,7 +73,7 @@ namespace API.Controllers
         {
             if (CheckEmailExistsAsync(registerdto.Email).Result.Value)
             {
-                return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = new[] { "email address is in use" } });
+                return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = new[] { "Email address is already in use! Please provide a different address!" } });
             }
 
             var user = new AppUser
