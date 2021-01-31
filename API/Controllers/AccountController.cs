@@ -49,30 +49,6 @@ namespace API.Controllers
             return await _userManager.FindByEmailAsync(email) != null;
         }
 
-        //[Authorize]
-        //[HttpGet("address")]
-        //public async Task<ActionResult<AddressDto>> GetUserAddress()
-        //{
-        //    var user = await _userManager.FindByUserByClaimsPrincipleWithAddressAsync(HttpContext.User);
-
-        //    return _mapper.Map<Address, AddressDto>(user.Address);
-        //}
-
-        //[Authorize]
-        //[HttpPut("address")]
-        //public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
-        //{
-        //    var user = await _userManager.FindByUserByClaimsPrincipleWithAddressAsync(HttpContext.User);
-
-        //    user.Address = _mapper.Map<AddressDto, Address>(address);
-
-        //    var result = await _userManager.UpdateAsync(user);
-
-        //    if (result.Succeeded) return Ok(_mapper.Map<Address, AddressDto>(user.Address));
-
-        //    return BadRequest("Problem updating the user");
-        //}
-
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -93,7 +69,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> register(RegisterDto registerdto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerdto)
         {
             if (CheckEmailExistsAsync(registerdto.Email).Result.Value)
             {
@@ -119,6 +95,43 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email
+            };
+        }
+
+        // DELETE: Users/5
+        [HttpDelete("{email}")]
+        public async Task<ActionResult<UserDto>> DeleteUserById(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.DeleteAsync(user);
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Username = user.UserName
+            };
+        }
+
+        // DELETE: Current user
+        [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult<UserDto>> DeleteCurrentUser()
+        {
+            var user = await _userManager.FindByEmailFromClaimsPrinciple(HttpContext.User);
+
+            await _userManager.DeleteAsync(user);
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = await _tokenService.CreateToken(user),
+                Username = user.UserName
             };
         }
     }
