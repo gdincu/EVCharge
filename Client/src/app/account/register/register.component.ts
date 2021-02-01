@@ -8,7 +8,7 @@ import { switchMap, map } from 'rxjs/operators';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -33,12 +33,12 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    //this.accountService.register(this.registerForm.value).subscribe(response => {
-    //  this.router.navigateByUrl('/store');
-    //}, error => {
-    //  console.log(error);
-    //  this.errors = error.errors;
-    //});
+    this.accountService.register(this.registerForm.value).subscribe(response => {
+      this.router.navigateByUrl('/store');
+    }, error => {
+      console.log(error);
+      this.errors = error.errors;
+    });
   }
 
   validateUsernameNotTaken(): AsyncValidatorFn {
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
           if (!control.value) {
             return of(null);
           }
-          return this.accountService.checkUsernameExists(control.value).pipe(
+          return this.accountService.checkEmailExists(control.value).pipe(
             map(res => {
               return res ? { emailExists: true } : null;
             })

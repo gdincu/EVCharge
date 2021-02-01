@@ -13,6 +13,10 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     AccountRoutingModule,
     SharedModule
+  ],
+  exports: [
+    LoginComponent,
+    RegisterComponent
   ]
 })
 export class AccountModule { }

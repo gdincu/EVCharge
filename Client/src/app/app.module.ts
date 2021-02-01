@@ -9,7 +9,6 @@ import { StoreModule } from './store/store.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import { AccountService } from './account/account.service.service';
 
 @NgModule({
   declarations: [

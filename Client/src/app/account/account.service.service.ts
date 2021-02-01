@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, of } from 'rxjs';
 import { IUser } from '../shared/models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { userType } from '../shared/models/userType';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -35,65 +36,62 @@ export class AccountService {
     }
   }
 
-  //loadCurrentUser(token: string) {
-  //  if (token === null) {
-  //    this.currentUserSource.next(null);
-  //    return of(null);
-  //  }
+  loadCurrentUser(token: string) {
+    if (token === null) {
+      this.currentUserSource.next(null);
+      return of(null);
+    }
 
-  //  let headers = new HttpHeaders();
-  //  headers = headers.set('Authorization', `Bearer ${token}`);
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
 
-  //  return this.http.get(this.baseUrl + 'account', { headers }).pipe(
-  //    map((user: IUser) => {
-  //      if (user) {
-  //        localStorage.setItem('token', user.token);
-  //        this.currentUserSource.next(user);
-  //        this.isAdminSource.next(this.isAdmin(user.token));
-  //      }
-  //    })
-  //  );
-  //}
+    return this.http.get(this.baseUrl + 'account', { headers }).pipe(
+      map((user: IUser) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+          this.isAdminSource.next(this.isAdmin(user.token));
+        }
+      })
+    );
+  }
 
   login(values: any) {
-    //return this.http.post(this.baseUrl + 'account/login', values).pipe(
-    //  map((user: IUser) => {
-    //    if (user) {
-    //      localStorage.setItem('token', user.token);
-    //      this.currentUserSource.next(user);
-    //      this.isAdminSource.next(this.isAdmin(user.token));
-    //    }
-    //  })
-    //);
+    return this.http.post(this.baseUrl + 'account/login', values).pipe(
+      map((user: IUser) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+          this.isAdminSource.next(this.isAdmin(user.token));
+        }
+      })
+    );
   }
 
   register(values: any) {
-  //  return this.http.post(this.baseUrl + 'users', values).pipe(
-  //    map((user: IUser) => {
-  //      if (user) {
-  //        localStorage.setItem('token', user.token);
-  //        this.currentUserSource.next(user);
-  //      }
-  //    })
-  //  );
-  //}
-
-  //logout() {
-  //  localStorage.removeItem('token');
-  //  this.currentUserSource.next(null);
-  //  this.isAdminSource.next(false);
-  //  this.router.navigateByUrl('/');
+    return this.http.post(this.baseUrl + 'users', values).pipe(
+      map((user: IUser) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+        }
+      })
+    );
   }
 
-  checkUsernameExists(username: string) {
-    return this.http.get(this.baseUrl + 'users/usernameexists?username=' + username);
+  logout() {
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
+    this.isAdminSource.next(false);
+    this.router.navigateByUrl('/');
+  }
+
+  checkEmailExists(email: string) {
+    return this.http.get(this.baseUrl + 'users/emailexists?email=' + email);
   }
 
   getUserType(id: number) {
     return this.http.get<userType>(this.baseUrl + 'users/' + id);
   }
 
-  //updateUserAddress(address: IAddress) {
-  //  return this.http.put<IAddress>(this.baseUrl + 'account/address', address);
-  //}
 }
