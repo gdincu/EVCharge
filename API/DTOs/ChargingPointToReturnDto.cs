@@ -18,5 +18,7 @@ namespace API.Dtos
         public string ChargingPointLocation { get; set; }
         [Required]
         public string ChargingPointType { get; set; }
+        public int QtyTotal { get; set; }
+        public int QtyAvailable { get; set; }
     }
 }

@@ -1,12 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\API\\Extensions",
+    "\\Client\\src",
     "\\Client\\src\\app",
     "\\Client\\src\\app\\account",
+    "\\Client\\src\\app\\account\\login",
     "\\Client\\src\\app\\account\\register",
-    "\\Client\\src\\app\\store",
-    "\\Infrastructure\\Data"
+    "\\Client\\src\\app\\shared\\models"
   ],
   "SelectedNode": "\\Client",
   "PreviewInSolutionExplorer": false
