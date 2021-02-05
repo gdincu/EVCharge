@@ -1,11 +1,18 @@
-<ul>
-  <li class="list-unstyled" *ngFor="let item of bookings">
-    <h2>{{item.id}}</h2>
-    <p>{{item.start}}</p>
-    <p>{{item.end}}</p>
-  </li>
-</ul>
+<div class="container">
+  <div class="row row-fluid">
 
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
-</form>
+    <div class="card border-dark mb-3 m-2" style="max-width: 20rem;" *ngFor="let item of bookings">
+      <div class="card-header">Booking {{item.id}}</div>
+      <div class="card-body">
+        <h4 class="card-title">£{{item.price}}</h4>
+        <p class="card-text">userId {{item.userId}}</p>
+        <p class="card-text">chargingPointId: {{item.chargingPointId}}</p>
+        <p class="card-text">start: {{item.start}}</p>
+        <p class="card-text">end: {{item.end}}</p>
+        <p class="card-text">price: {{item.price}}</p>
+        <p class="card-text">createdTimestamp: {{item.createdTimestamp}}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
