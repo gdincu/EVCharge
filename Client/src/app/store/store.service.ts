@@ -23,11 +23,6 @@ export class StoreService {
 
   constructor(private http: HttpClient) { }
 
-  //Method to return ChargingPoints
-  //getChargingPoints() {
-  //  return this.http.get<IPagination>(this.baseUrl + 'chargingpoints?pageindex=1&pagesize=10');
-  //}
-
   getChargingPoints(useCache: boolean) {
     if (useCache === false) {
       this.chargingPoints = [];

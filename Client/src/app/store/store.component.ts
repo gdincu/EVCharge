@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { StoreService } from './store.service';
 import { IChargingPoint } from '../shared/models/chargingPoint';
 import { IChargingPointLocation } from '../shared/models/chargingPointLocation';
@@ -11,15 +11,19 @@ import { StoreParams } from '../shared/models/storeParams';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent implements OnInit {
-
+  @ViewChild('search', { static: false }) searchTerm: ElementRef;
   chargingPoints: IChargingPoint[];
   chargingPointLocations: IChargingPointLocation[];
   chargingPointTypes: IChargingPointType[];
   totalCount: number;
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },
-    { name: 'Price: Low to High', value: 'priceAsc' },
-    { name: 'Price: High to Low', value: 'priceDesc' }
+    { name: 'Price: Asc', value: 'priceAsc' },
+    { name: 'Price: Desc', value: 'priceDesc' },
+    { name: 'Type: Asc', value: 'typeAsc' },
+    { name: 'Type: Desc', value: 'typeDesc' },
+    { name: 'Location: Asc', value: 'locationAsc' },
+    { name: 'Location: Desc', value: 'locationDesc' }
   ];
   storeParams: StoreParams;
 
@@ -90,19 +94,19 @@ export class StoreComponent implements OnInit {
     }
   }
 
-  //onSearch() {
-  //  const params = this.storeService.getStoreParams();
-  //  params.search = this.searchTerm.nativeElement.value;
-  //  params.pageNumber = 1;
-  //  this.shopService.setShopParams(params);
-  //  this.getProducts();
-  //}
+  onSearch() {
+    const params = this.storeService.getStoreParams();
+    params.search = this.searchTerm.nativeElement.value;
+    params.pageNumber = 1;
+    this.storeService.setStoreParams(params);
+    this.getChargingPoints();
+  }
 
-  //onReset() {
-  //  this.searchTerm.nativeElement.value = '';
-  //  this.shopParams = new ShopParams();
-  //  this.shopService.setShopParams(this.shopParams);
-  //  this.getProducts();
-  //}
+  onReset() {
+    this.searchTerm.nativeElement.value = '';
+    this.storeParams = new StoreParams();
+    this.storeService.setStoreParams(this.storeParams);
+    this.getChargingPoints();
+  }
 
 }
