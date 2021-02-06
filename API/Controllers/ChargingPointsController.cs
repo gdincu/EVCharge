@@ -17,12 +17,19 @@ namespace API.Controllers
     public class ChargingPointsController : BaseApiController
     {
         private readonly IGenericRepository<ChargingPoint> _chargingPointRepository;
+        private readonly IGenericRepository<ChargingPointLocation> _chargingPointLocationRepository;
+        private readonly IGenericRepository<ChargingPointType> _chargingPointTypeRepository;
         private readonly IMapper _mapper;
 
-        public ChargingPointsController(IGenericRepository<ChargingPoint> chargingPointRepository, 
-            IMapper mapper)
+        public ChargingPointsController(
+            IGenericRepository<ChargingPoint> chargingPointRepository,
+            IGenericRepository<ChargingPointLocation> chargingPointLocationRepository,
+            IGenericRepository<ChargingPointType> chargingPointTypeRepository,
+        IMapper mapper)
         {
             _chargingPointRepository = chargingPointRepository;
+            _chargingPointLocationRepository = chargingPointLocationRepository;
+            _chargingPointTypeRepository = chargingPointTypeRepository;
             _mapper = mapper;
         }
 
@@ -97,6 +104,18 @@ namespace API.Controllers
             await _chargingPointRepository.DeleteItemAsync(id);
             return deletedChargingPoint;
 
+        }
+
+        [HttpGet("chargingpointlocations")]
+        public async Task<ActionResult<IReadOnlyList<ChargingPointLocation>>> GetChargingPointLocations()
+        {
+            return Ok(await _chargingPointLocationRepository.GetItemsAsync());
+        }
+
+        [HttpGet("chargingpointtypes")]
+        public async Task<ActionResult<IReadOnlyList<ChargingPointType>>> GetChargingPointTypes()
+        {
+            return Ok(await _chargingPointTypeRepository.GetItemsAsync());
         }
 
     }

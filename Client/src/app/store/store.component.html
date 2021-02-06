@@ -1,18 +1,53 @@
-<div class="container">
+<div class="container ml-1 mr-1">
   <div class="row row-fluid">
 
-    <div class="card border-dark mb-3 m-2" style="max-width: 20rem;" *ngFor="let item of bookings">
-      <div class="card-header">Booking {{item.id}}</div>
-      <div class="card-body">
-        <h4 class="card-title">£{{item.price}}</h4>
-        <p class="card-text">userId {{item.userId}}</p>
-        <p class="card-text">chargingPointId: {{item.chargingPointId}}</p>
-        <p class="card-text">start: {{item.start}}</p>
-        <p class="card-text">end: {{item.end}}</p>
-        <p class="card-text">price: {{item.price}}</p>
-        <p class="card-text">createdTimestamp: {{item.createdTimestamp}}</p>
-      </div>
-    </div>
+    <section class="col-2">
+      <ng-container *ngIf="chargingPointLocations && chargingPointTypes">
+        <h6 class="text-success ml-1 mt-4 mb-3">Sort</h6>
+        <select class="custom-select mb-4" (change)="onSortSelected($event.target.value)">
+          <option *ngFor="let sort of sortOptions"
+                  [selected]="storeParams.sort === sort.value"
+                  [value]="sort.value">
+            {{sort.name}}
+          </option>
+        </select>
+
+        <h6 class="text-success ml-1">Locations</h6>
+        <ul class="list-group my-3">
+          <li class="list-group-item" *ngFor="let location of chargingPointLocations"
+              [class.active]="location.id === this.storeParams.chargingPointLocationId" [value]="location.id"
+              (click)="onLocationSelected(location.id)">
+            {{location.name}}
+          </li>
+        </ul>
+
+        <h6 class="text-success ml-1">Types</h6>
+        <ul class="list-group my-3">
+          <li class="list-group-item" *ngFor="let type of chargingPointTypes" [class.active]="type.id === this.storeParams.chargingPointTypeId"
+              [value]="type.id" (click)="onTypeSelected(type.id)">
+            {{type.name}}
+          </li>
+        </ul>
+      </ng-container>
+    </section>
+
+    <section class="col-10">
+      <div class="container">
+        <div class="row row-fluid">
+
+          <div class="card border-dark mb-3 m-2" style="max-width: 20rem;" *ngFor="let item of chargingPoints">
+            <div class="card-header">{{item.name}}</div>
+            <div class="card-body">
+              <h4 class="card-title">{{item.chargingpointlocation}}</h4>
+              <h4 class="card-title">£{{item.price}}</h4>
+              <p class="card-text">description: {{item.description}}</p>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </section>
 
   </div>
 </div>
+
