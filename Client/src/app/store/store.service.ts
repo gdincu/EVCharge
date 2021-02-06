@@ -48,11 +48,11 @@ export class StoreService {
     let params = new HttpParams();
 
     if (this.storeParams.ChargingPointLocationId !== 0) {
-      params = params.append('chargingPointLocationId', this.storeParams.ChargingPointLocationId.toString());
+      params = params.append('LocationId', this.storeParams.ChargingPointLocationId.toString());
     }
 
     if (this.storeParams.ChargingPointTypeId !== 0) {
-      params = params.append('chargingPointTypeId', this.storeParams.ChargingPointTypeId.toString());
+      params = params.append('TypeId', this.storeParams.ChargingPointTypeId.toString());
     }
 
     if (this.storeParams.search) {

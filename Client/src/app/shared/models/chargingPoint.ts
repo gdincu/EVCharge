@@ -5,4 +5,6 @@ export interface IChargingPoint {
   price: number;
   chargingPointLocation: string;
   chargingPointType: string;
+  qtyTotal: number;
+  qtyAvailable: number;
 }

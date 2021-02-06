@@ -35,12 +35,13 @@
       <div class="container">
         <div class="row row-fluid">
 
-          <div class="card border-dark mb-3 m-2" style="max-width: 20rem;" *ngFor="let item of chargingPoints">
+          <div class="card border-dark mb-3 m-2" style="max-width: 30rem;" *ngFor="let item of chargingPoints">
             <div class="card-header">{{item.name}}</div>
             <div class="card-body">
               <h4 class="card-title">{{item.chargingpointlocation}}</h4>
               <h4 class="card-title">£{{item.price}}</h4>
               <p class="card-text">description: {{item.description}}</p>
+              <p class="card-text">qtyAvailable: {{item.qtyAvailable}}</p>
             </div>
           </div>
 
