@@ -1,14 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\API\\Controllers",
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
+    "\\Client\\src\\app\\admin\\edit-chargingpoint",
     "\\Client\\src\\app\\core\\nav-bar",
-    "\\Client\\src\\app\\store",
-    "\\Client\\src\\assets",
-    "\\Core\\Specifications"
+    "\\Client\\src\\app\\shared\\models",
+    "\\Core\\Entities",
+    "\\Core\\Entities\\Identity"
   ],
-  "SelectedNode": "\\Client\\src\\app\\app.module.ts",
+  "SelectedNode": "\\Client\\src\\app\\store",
   "PreviewInSolutionExplorer": false
 }

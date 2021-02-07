@@ -49,6 +49,13 @@ namespace API.Controllers
 
         }
 
+        // GET: api/ChargingPoints/all
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<ChargingPointToReturnDto>>> GetAllChargingPoints()
+        {
+            return Ok(await _chargingPointRepository.GetItemsAsync());
+        }
+
         // GET: api/ChargingPoints/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

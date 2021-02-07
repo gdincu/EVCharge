@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IBooking } from '../../shared/models/booking';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-edit-booking',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditBookingComponent implements OnInit {
 
-  constructor() { }
+  bookings: IBooking[];
+
+  constructor(private adminService: AdminService) { }
 
   ngOnInit() {
+    this.getBookings();
+  }
+
+  getBookings() {
+    this.adminService.getBookings().subscribe(response => {
+      this.bookings = response;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  removeBooking(bookingId: number) {
+    this.adminService.removeBooking(bookingId);
+    this.getBookings();
   }
 
 }

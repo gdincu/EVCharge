@@ -8,10 +8,9 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent },
-  { path: 'chargingpoint/create', component: EditChargingpointComponent },
-  { path: 'chargingpoint/edit/:id', component: EditChargingpointComponent },
-  { path: 'booking/edit/:id', component: EditBookingComponent },
-  { path: 'user/delete', component: EditUserComponent }
+  { path: 'chargingpoint', component: EditChargingpointComponent },
+  { path: 'booking', component: EditBookingComponent },
+  { path: 'user', component: EditUserComponent }
 ];
 
 @NgModule({

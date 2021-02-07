@@ -42,7 +42,7 @@ namespace API.Controllers
         }
 
         // GET: Users
-        [HttpGet("allusers")]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return Ok(await _userManager.Users.ToListAsync());

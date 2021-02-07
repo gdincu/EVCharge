@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IChargingPoint } from '../../shared/models/chargingPoint';
+import { AdminService } from '../admin.service';
 
 @Component({
   selector: 'app-edit-chargingpoint',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditChargingpointComponent implements OnInit {
 
-  constructor() { }
+  chargingPoints: IChargingPoint[];
+
+  constructor(private adminService: AdminService) { }
 
   ngOnInit() {
+    this.getChargingPoints();
+  }
+
+  getChargingPoints() {
+    this.adminService.getAllChargingPoints().subscribe(response => {
+      this.chargingPoints = response;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  removeChargingPoint(chargingPointId: number) {
+    this.adminService.removeChargingPoint(chargingPointId);
+    this.getChargingPoints();
   }
 
 }

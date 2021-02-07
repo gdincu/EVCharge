@@ -78,6 +78,13 @@ namespace API.Controllers
 
         }
 
+        // GET: Bookings
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<Booking>>> GetAllBookings()
+        {
+            return Ok(await _bookingRepository.GetItemsAsync());
+        }
+
         // GET: Bookings/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
