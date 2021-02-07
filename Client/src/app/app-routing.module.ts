@@ -13,8 +13,22 @@ import { ChargingPointItemComponent } from './store/chargingPoint-item/chargingP
 const routes: Routes = [
   { path: '', component: AboutComponent },
   { path: 'store', component: StoreComponent },
-  { path: 'store/:id', component: ChargingPointDetailsComponent },
-  { path: 'chargingpointitem', component: ChargingPointItemComponent },
+  {
+    path: 'store/:id',
+    canActivate: [AuthGuard],
+    component: ChargingPointDetailsComponent
+  },
+  {
+    path: 'chargingpointitem',
+    canActivate: [AuthGuard],
+    component: ChargingPointItemComponent
+  },
+  {
+    path: 'admin',
+    //canActivate: [AuthGuard, AdminGuard],
+    loadChildren: () => import('./admin/admin.module')
+      .then(mod => mod.AdminModule)
+  },
   { path: 'contact', component: ContactComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'account', loadChildren: () => import('./account/account.module').then(mod => mod.AccountModule) },

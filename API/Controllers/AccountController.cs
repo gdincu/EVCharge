@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -7,6 +8,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -37,6 +39,13 @@ namespace API.Controllers
                 Token = await _tokenService.CreateToken(user),
                 Username = user.UserName
             };
+        }
+
+        // GET: Users
+        [HttpGet("allusers")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        {
+            return Ok(await _userManager.Users.ToListAsync());
         }
 
         [HttpGet("emailexists")]
@@ -95,8 +104,8 @@ namespace API.Controllers
         }
 
         // DELETE: Users/5
-        [HttpDelete("{email}")]
-        public async Task<ActionResult<UserDto>> DeleteUserById(string email)
+        [HttpDelete("{deletebyemail}")]
+        public async Task<ActionResult<UserDto>>DeleteUserByEmail(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 

@@ -3,6 +3,6 @@ export class StoreParams {
   ChargingPointLocationId = 0;
   sort = 'startdateasc';
   pageNumber = 1;
-  pageSize = 4;
+  pageSize = 12;
   search: string;
 }

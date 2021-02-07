@@ -6,11 +6,14 @@
 
     <a class="p-2 text-success" routerLink="/store">Charging Points</a>
     <a class="p-2">|</a>
-    <a class="p-2 text-success" routerLink="/">Bookings</a>
-    <a *ngIf="(isAdmin$ | async)" class="p-2 text-success" routerLink="/admin" routerLinkActive="active">Accounts</a>
-    <a class="p-2">|</a>
-    <a class="p-2 text-success" routerLink="/">Accounts</a>
-    <a class="p-2">|</a>
+    <!--Only displayed after logging in-->
+    <a class="p-2 text-success" *ngIf="(currentUser$ | async)" routerLink="/">Bookings</a>
+    <!--Only displayed if the logged in user is an admin-->
+    <a *ngIf="(isAdmin$ | async)" class="p-2">|</a>
+    <!--Only displayed if the logged in user is an admin-->
+    <a *ngIf="(isAdmin$ | async)" class="p-2 text-success" routerLink="/admin" routerLinkActive="active">Admin</a>
+    <!--Only displayed after logging in-->
+    <a class="p-2" *ngIf="(currentUser$ | async)">|</a>
     <a class="p-2 text-success" routerLink="/contact">Contact</a>
   </nav>
 

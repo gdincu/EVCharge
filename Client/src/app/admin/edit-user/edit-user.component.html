@@ -1,0 +1,25 @@
+<div class="ml-3 mb-3">
+  <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+</div>
+
+<div class="row mx-3">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-light" *ngFor="let user of users">
+          <td>{{user.userName}}</td>
+          <td>{{user.email}}</td>
+          <td><button type="button" class="btn btn-danger" (click)="removeUser(user.email)">Delete</button></td>
+      </tr>
+      </tbody>
+  </table>
+
+   
+</div>
