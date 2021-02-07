@@ -1,13 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\account",
-    "\\Client\\src\\app\\account\\login",
-    "\\Client\\src\\app\\account\\register",
-    "\\Client\\src\\app\\shared\\models"
+    "\\Client\\src\\app\\core\\nav-bar",
+    "\\Client\\src\\app\\store",
+    "\\Client\\src\\assets",
+    "\\Core\\Specifications"
   ],
-  "SelectedNode": "\\Client",
+  "SelectedNode": "\\Client\\src\\app\\app.module.ts",
   "PreviewInSolutionExplorer": false
 }

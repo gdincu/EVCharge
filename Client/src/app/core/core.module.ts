@@ -4,13 +4,16 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { TestErrorComponent } from './test-error/test-error.component';
-
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
   declarations: [NavBarComponent, NotFoundComponent, ServerErrorComponent, TestErrorComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    SharedModule
   ],
   exports: [
     NavBarComponent

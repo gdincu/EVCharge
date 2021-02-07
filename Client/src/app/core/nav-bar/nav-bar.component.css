@@ -14,3 +14,7 @@ a {
   .logo:focus {
     outline: none;
   }
+
+.router-link {
+  cursor: pointer;
+}
