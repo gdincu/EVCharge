@@ -8,10 +8,10 @@ import { CoreModule } from './core/core.module';
 import { StoreModule } from './store/store.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
 import { AboutModule } from './about/about.module';
 import { ContactModule } from './contact/contact.module';
+
+
 
 @NgModule({
   declarations: [

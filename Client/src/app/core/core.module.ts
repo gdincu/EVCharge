@@ -7,7 +7,6 @@ import { TestErrorComponent } from './test-error/test-error.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 
-
 @NgModule({
   declarations: [NavBarComponent, NotFoundComponent, ServerErrorComponent, TestErrorComponent],
   imports: [

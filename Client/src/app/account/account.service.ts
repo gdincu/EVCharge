@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ReplaySubject, of } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, of } from 'rxjs';
 import { IUser } from '../shared/models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { userType } from '../shared/models/userType';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -69,7 +68,7 @@ export class AccountService {
   }
 
   register(values: any) {
-    return this.http.post(this.baseUrl + 'users', values).pipe(
+    return this.http.post(this.baseUrl + 'account/register', values).pipe(
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
@@ -87,11 +86,7 @@ export class AccountService {
   }
 
   checkEmailExists(email: string) {
-    return this.http.get(this.baseUrl + 'users/emailexists?email=' + email);
-  }
-
-  getUserType(id: number) {
-    return this.http.get<userType>(this.baseUrl + 'users/' + id);
+    return this.http.get(this.baseUrl + 'account/emailexists?email=' + email);
   }
 
 }

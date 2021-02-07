@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AsyncValidatorFn } from '@angular/forms';
-import { AccountService } from '../account.service.service';
+import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
 import { timer, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -22,9 +22,8 @@ export class RegisterComponent implements OnInit {
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      firstname: [null, [Validators.required]],
-      surname: [null, [Validators.required]],
-      username: [null,
+      username: [null, [Validators.required]],
+      email: [null,
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
         [this.validateUsernameNotTaken()]
       ],
