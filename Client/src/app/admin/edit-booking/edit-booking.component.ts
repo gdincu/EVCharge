@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ElementRef, ViewChild } from '@angular/core';
 import { IBooking } from '../../shared/models/booking';
 import { AdminService } from '../admin.service';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AlertifyService } from '../../shared/services/alertify.service';
 import { Router } from '@angular/router';
+import { BookingParams } from '../../shared/models/bookingParams';
 
 @Component({
   selector: 'app-edit-booking',
@@ -13,8 +14,17 @@ import { Router } from '@angular/router';
 })
 export class EditBookingComponent implements OnInit {
 
+  @ViewChild('start', { static: false }) start: ElementRef;
+  @ViewChild('end', { static: false }) end: ElementRef;
   bookings: IBooking[];
   @Input() booking: IBooking;
+  bookingParams: BookingParams;
+  sortOptions = [
+    { name: 'End Date Asc', value: 'enddateasc' },
+    { name: 'End Date Asc', value: 'enddatedesc' },
+    { name: 'Start Date Desc', value: 'startdateasc' },
+    { name: 'Start Date Asc', value: 'startdatedesc' }
+  ];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -22,15 +32,17 @@ export class EditBookingComponent implements OnInit {
     private _alertify: AlertifyService,
     private http: HttpClient,
     private router: Router
-  ) { }
-
-  ngOnInit() {
-    this.getBookings();
+  ) {
+    this.bookingParams = this.adminService.getBookingParams();
   }
 
-  getBookings() {
-    this.adminService.getBookings().subscribe(response => {
-      this.bookings = response;
+  ngOnInit() {
+    this.getBookings(true);
+  }
+
+  getBookings(useCache = false) {
+    this.adminService.getBookings(useCache).subscribe(response => {
+      this.bookings = response.data;
     }, error => {
       console.log(error);
     });
@@ -49,5 +61,22 @@ export class EditBookingComponent implements OnInit {
       this._alertify.success('Booking details updated!');
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate(['admin/booking']));
+  }
+
+  onSearch() {
+    const params = this.adminService.getBookingParams();
+    params.start = this.start.nativeElement.value;
+    params.end = this.end.nativeElement.value;
+    params.pageNumber = 1;
+    this.adminService.setBookingParams(params);
+    this.getBookings();
+  }
+
+  onReset() {
+    this.start.nativeElement.value = '';
+    this.end.nativeElement.value = '';
+    this.bookingParams = new BookingParams();
+    this.adminService.setBookingParams(this.bookingParams);
+    this.getBookings();
   }
 }
