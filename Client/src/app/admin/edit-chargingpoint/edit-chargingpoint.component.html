@@ -1,5 +1,12 @@
-<div class="ml-3 mb-3">
-  <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+<div class="form-inline mb-5">
+  <div class="col-md-3">
+    <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+  </div>
+  <div *ngIf="chargingPoints" class="col-md-7 ml-2">
+    <input (keyup.enter)="onSearch()" class="form-control mr-2" #search style="width: 300px" placeholder="Search" type="text">
+    <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
+    <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>
+  </div>
 </div>
 
 <div class="row mx-3">
@@ -17,11 +24,19 @@
     </thead>
     <tbody>
       <tr class="table-light" *ngFor="let item of chargingPoints">
-        <td>{{item.name}}</td>
-        <td>£ {{item.price}}</td>
-        <td>{{item.qtyTotal}}</td>
-        <td>{{item.qtyAvailable}}</td>
-        <td><button type="button" class="btn btn-success">Edit</button></td>
+        <td class="form-group">
+          <input [(ngModel)]="item.name" type="text" class="form-control" placeholder="{{item.name}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.price" type="number" class="form-control" placeholder="{{item.price}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.qtyTotal" type="number" class="form-control" placeholder="{{item.qtyTotal}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.qtyAvailable" type="number" class="form-control" placeholder="{{item.qtyAvailable}}">
+        </td>
+        <td><button type="button" class="btn btn-success" (click)="updateChargingPoint(item.id)">Update</button></td>
         <td><button type="button" class="btn btn-danger" (click)="removeChargingPoint(item.id)">Delete</button></td>
       </tr>
     </tbody>

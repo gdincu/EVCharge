@@ -44,7 +44,8 @@ export class EditBookingComponent implements OnInit {
     this.adminService.getBookings(useCache).subscribe(response => {
       this.bookings = response.data;
     }, error => {
-      console.log(error);
+        console.log(error);
+        this._alertify.error(error);
     });
   }
 

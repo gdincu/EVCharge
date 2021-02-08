@@ -7,6 +7,8 @@ import { IBooking } from '../shared/models/booking';
 import { IChargingPoint } from '../shared/models/chargingPoint';
 import { BookingParams } from '../shared/models/bookingParams';
 import { PaginationBooking, IPaginationBooking } from '../shared/models/paginationBooking';
+import { StoreParams } from '../shared/models/storeParams';
+import { Pagination, IPagination } from '../shared/models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,10 @@ export class AdminService {
   users: IUser[] = [];
   bookings: IBooking[] = [];
   chargingPoints: IChargingPoint[] = [];
-  pagination = new PaginationBooking();
+  paginationBooking = new PaginationBooking();
+  paginationChargingPoint = new Pagination();
   bookingParams = new BookingParams();
+  storeParams = new StoreParams();
 
   constructor(private http: HttpClient) { }
 
@@ -35,15 +39,6 @@ export class AdminService {
     return this.http.delete(this.baseUrl + 'account/deletebyemail?email=' + userEmail).subscribe();
   }
 
-  //getBookings() {
-  //  return this.http.get<IBooking[]>(this.baseUrl + 'Bookings/all').pipe(
-  //    map(response => {
-  //      this.bookings = response;
-  //      return response;
-  //    })
-  //  );
-  //}
-
   getBookings(useCache: boolean) {
     if (useCache === false) {
       this.bookings = [];
@@ -53,11 +48,11 @@ export class AdminService {
       const pagesReceived = Math.ceil(this.bookings.length / this.bookingParams.pageSize);
 
       if (this.bookingParams.pageNumber <= pagesReceived) {
-        this.pagination.data =
+        this.paginationBooking.data =
           this.bookings.slice((this.bookingParams.pageNumber - 1) * this.bookingParams.pageSize,
             this.bookingParams.pageNumber * this.bookingParams.pageSize);
 
-        return of(this.pagination);
+        return of(this.paginationBooking);
       }
     }
 
@@ -79,8 +74,8 @@ export class AdminService {
       .pipe(
         map(response => {
           this.bookings = [...this.bookings, ...response.body.data];
-          this.pagination = response.body;
-          return this.pagination;
+          this.paginationBooking = response.body;
+          return this.paginationBooking;
         })
       );
   }
@@ -95,7 +90,15 @@ export class AdminService {
       .put<IBooking>(url, booking);
   }
 
-  getAllChargingPoints() {
+  getBookingParams() {
+    return this.bookingParams;
+  }
+
+  setBookingParams(params: BookingParams) {
+    this.bookingParams = params;
+  }
+
+  getChargingPoints() {
     return this.http.get<IChargingPoint[]>(this.baseUrl + 'ChargingPoints/all').pipe(
       map(response => {
         this.chargingPoints = response;
@@ -108,12 +111,8 @@ export class AdminService {
     return this.http.delete(this.baseUrl + 'ChargingPoints/' + chargingPointId).subscribe();
   }
 
-  getBookingParams() {
-    return this.bookingParams;
-  }
-
-  setBookingParams(params: BookingParams) {
-    this.bookingParams = params;
+   updateChargingPoint(chargingPoint: IChargingPoint) {
+    return this.http.put(this.baseUrl + 'ChargingPoints/' + chargingPoint.id, chargingPoint);
   }
 
 }

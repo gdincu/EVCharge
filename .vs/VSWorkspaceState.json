@@ -4,9 +4,11 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\admin",
-    "\\Client\\src\\app\\admin\\edit-booking"
+    "\\Client\\src\\app\\shared",
+    "\\Client\\src\\app\\shared\\models",
+    "\\Core\\Entities",
+    "\\Core\\Specifications"
   ],
-  "SelectedNode": "\\Client\\src\\app\\app.module.ts",
+  "SelectedNode": "\\Client\\src\\app\\shared\\models\\chargingPoint.ts",
   "PreviewInSolutionExplorer": false
 }
