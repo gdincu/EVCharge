@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IUser } from '../shared/models/user';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -41,6 +42,12 @@ export class AdminService {
 
   removeBooking(bookingId: number) {
     return this.http.delete(this.baseUrl + 'Bookings/' + bookingId).subscribe();
+  }
+
+  updateBooking(booking: IBooking): Observable<IBooking> {
+    const url = `${this.baseUrl}Bookings/${booking.id}`;
+    return this.http
+      .put<IBooking>(url, booking);
   }
 
   getAllChargingPoints() {

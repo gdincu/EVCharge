@@ -7,6 +7,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col">Id</th>
         <th scope="col">Start</th>
         <th scope="col">End</th>
         <th scope="col">Price</th>
@@ -17,11 +18,12 @@
     </thead>
     <tbody>
       <tr class="table-light" *ngFor="let booking of bookings">
-        <td>{{booking.start}}</td>
-        <td>{{booking.end}}</td>
-        <td>£ {{booking.price}}</td>
+        <td>{{booking.id}}</td>
+        <td><input [(ngModel)]="booking.start" placeholder="{{booking.start}}"></td>
+        <td><input [(ngModel)]="booking.end" placeholder="{{booking.end}}"></td>
+        <td><input [(ngModel)]="booking.price" placeholder="{{booking.price}}"></td>
         <td>{{booking.createdTimestamp}}</td>
-        <td><button type="button" class="btn btn-success">Edit</button></td>
+        <td><button type="button" class="btn btn-success" (click)="updateBooking(booking.id)">Edit</button></td>
         <td><button type="button" class="btn btn-danger" (click)="removeBooking(booking.id)">Delete</button></td>
       </tr>
     </tbody>

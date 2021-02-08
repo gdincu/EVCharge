@@ -5,6 +5,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditBookingComponent } from './edit-booking/edit-booking.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { AdminComponent } from './admin.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
     ],
   exports: [
     EditChargingpointComponent,
