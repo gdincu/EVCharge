@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AboutModule } from './about/about.module';
 import { ContactModule } from './contact/contact.module';
+import { AlertifyService } from './shared/services/alertify.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,10 @@ import { ContactModule } from './contact/contact.module';
     AboutModule,
     ContactModule
   ],
-  providers: [HttpClientModule ],
+  providers: [
+    HttpClientModule,
+    AlertifyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

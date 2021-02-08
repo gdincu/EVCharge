@@ -24,6 +24,7 @@
     "@ngx-formly/bootstrap": "^5.0.0",
     "@ngx-formly/core": "^5.0.0",
     "@ngx-formly/schematics": "^5.10.11",
+    "alertifyjs": "^1.13.1",
     "bootstrap": "4.1.1",
     "font-awesome": "^4.7.0",
     "material-icons": "^0.5.2",

@@ -14,9 +14,13 @@
     </thead>
     <tbody>
       <tr class="table-light" *ngFor="let user of users">
-          <td>{{user.userName}}</td>
-          <td>{{user.email}}</td>
-          <td><button type="button" class="btn btn-danger" (click)="removeUser(user.email)">Delete</button></td>
+        <td class="form-group">
+          <input type="text" class="form-control " value="{{user.userName}}" disabled>
+        </td>
+        <td class="form-group">
+          <input type="email" class="form-control " value="{{user.email}}" disabled>
+        </td>
+        <td><button type="button" class="btn btn-danger" (click)="removeUser(user.email)">Delete</button></td>
       </tr>
       </tbody>
   </table>
