@@ -1,0 +1,61 @@
+<div class="ml-3 mb-3">
+  <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+</div>
+
+<div class="row mx-3">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">City</th>
+        <th scope="col">Street</th>
+        <th scope="col">HouseNumber</th>
+        <th scope="col">Postcode</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-light" *ngFor="let item of chargingPointLocations">
+        <td class="form-group">
+          <input [(ngModel)]="item.name" type="text" class="form-control" placeholder="{{item.name}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.city" type="text" class="form-control" placeholder="{{item.city}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.street" type="text" class="form-control" placeholder="{{item.street}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.houseNumber" type="text" class="form-control" placeholder="{{item.houseNumber}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.postcode" type="text" class="form-control" placeholder="{{item.postcode}}">
+        </td>
+        <td><button type="button" class="btn btn-success" (click)="updateChargingPointLocation(item.id)">Update</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="removeChargingPointLocation(item.id)">Delete</button></td>
+      </tr>
+      <tr>
+        <td class="form-group">
+          <input #name type="text" class="form-control">
+        </td>
+        <td class="form-group">
+          <input #city type="text" class="form-control">
+        </td>
+        <td class="form-group">
+          <input #street type="text" class="form-control">
+        </td>
+        <td class="form-group">
+          <input #housenumber type="text" class="form-control">
+        </td>
+        <td class="form-group">
+          <input #postcode type="text" class="form-control">
+        </td>
+        <td><button type="button" class="btn btn-warning" (click)="createChargingPointLocation(name.value, city.value,street.value,housenumber.value,postcode.value)">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>

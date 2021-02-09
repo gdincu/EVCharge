@@ -9,6 +9,8 @@ import { BookingParams } from '../shared/models/bookingParams';
 import { PaginationBooking, IPaginationBooking } from '../shared/models/paginationBooking';
 import { StoreParams } from '../shared/models/storeParams';
 import { Pagination, IPagination } from '../shared/models/pagination';
+import { IChargingPointType } from '../shared/models/chargingPointType';
+import { IChargingPointLocation } from '../shared/models/chargingPointLocation';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class AdminService {
   users: IUser[] = [];
   bookings: IBooking[] = [];
   chargingPoints: IChargingPoint[] = [];
+  chargingPointTypes: IChargingPointType[] = [];
+  chargingPointLocations: IChargingPointLocation[] = [];
   paginationBooking = new PaginationBooking();
   paginationChargingPoint = new Pagination();
   bookingParams = new BookingParams();
@@ -119,4 +123,45 @@ export class AdminService {
     return this.http.post(this.baseUrl + 'ChargingPoints', product);
   }
 
+  getChargingPointTypes() {
+    return this.http.get<IChargingPointType[]>(this.baseUrl + 'ChargingPointTypes').pipe(
+      map(response => {
+        this.chargingPointTypes = response;
+        return response;
+      })
+    );
+  }
+
+  removeChargingPointType(id: number) {
+    return this.http.delete(this.baseUrl + 'ChargingPointTypes/' + id).subscribe();
+  }
+
+  updateChargingPointType(chargingPointType: IChargingPointType) {
+    return this.http.put(this.baseUrl + 'ChargingPointTypes/' + chargingPointType.id, chargingPointType);
+  }
+
+  createChargingPointType(chargingPointType: IChargingPointType) {
+    return this.http.post(this.baseUrl + 'ChargingPointTypes', chargingPointType);
+  }
+
+  getChargingPointLocations() {
+    return this.http.get<IChargingPointLocation[]>(this.baseUrl + 'ChargingPointLocations').pipe(
+      map(response => {
+        this.chargingPointLocations = response;
+        return response;
+      })
+    );
+  }
+
+  removeChargingPointLocation(id: number) {
+    return this.http.delete(this.baseUrl + 'ChargingPointLocations/' + id).subscribe();
+  }
+
+  updateChargingPointLocation(chargingPointLocation: IChargingPointLocation) {
+    return this.http.put(this.baseUrl + 'ChargingPointLocations/' + chargingPointLocation.id, chargingPointLocation);
+  }
+
+  createChargingPointLocation(chargingPointLocation: IChargingPointLocation) {
+    return this.http.post(this.baseUrl + 'ChargingPointLocations', chargingPointLocation);
+  }
 }

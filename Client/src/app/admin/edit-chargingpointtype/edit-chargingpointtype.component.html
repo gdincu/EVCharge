@@ -1,0 +1,40 @@
+<div class="ml-3 mb-3">
+  <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+</div>
+
+<div class="row mx-3">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">powerRatingKW</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-light" *ngFor="let item of chargingPointTypes">
+        <td class="form-group">
+          <input [(ngModel)]="item.name" type="text" class="form-control" placeholder="{{item.name}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.powerRatingKW" type="number" class="form-control" placeholder="{{item.powerRatingKW}}">
+        </td>
+        <td><button type="button" class="btn btn-success" (click)="updateChargingPointType(item.id)">Update</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="removeChargingPointType(item.id)">Delete</button></td>
+      </tr>
+      <tr>
+        <td class="form-group">
+          <input #name type="text" class="form-control">
+        </td>
+        <td class="form-group">
+          <input #powerrating type="number" class="form-control">
+        </td>
+        <td><button type="button" class="btn btn-warning" (click)="createChargingPointType(name.value, powerrating.value)">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>
