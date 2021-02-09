@@ -24,20 +24,20 @@
     </thead>
     <tbody>
       <tr class="table-light" *ngFor="let item of chargingPoints">
-        <td class="form-group">
-          <input [(ngModel)]="item.name" type="text" class="form-control" placeholder="{{item.name}}">
-        </td>
-        <td class="form-group">
-          <input [(ngModel)]="item.price" type="number" class="form-control" placeholder="{{item.price}}">
-        </td>
-        <td class="form-group">
-          <input [(ngModel)]="item.qtyTotal" type="number" class="form-control" placeholder="{{item.qtyTotal}}">
-        </td>
-        <td class="form-group">
-          <input [(ngModel)]="item.qtyAvailable" type="number" class="form-control" placeholder="{{item.qtyAvailable}}">
-        </td>
-        <td><button type="button" class="btn btn-success" (click)="updateChargingPoint(item.id)">Update</button></td>
-        <td><button type="button" class="btn btn-danger" (click)="removeChargingPoint(item.id)">Delete</button></td>
+          <td class="form-group">
+            <input [(ngModel)]="item.name" type="text" class="form-control" placeholder="{{item.name}}">
+          </td>
+          <td class="form-group">
+            <input [(ngModel)]="item.price" type="number" class="form-control" placeholder="{{item.price}}">
+          </td>
+          <td class="form-group">
+            <input [(ngModel)]="item.qtyTotal" type="number" class="form-control" placeholder="{{item.qtyTotal}}">
+          </td>
+          <td class="form-group">
+            <input [(ngModel)]="item.qtyAvailable" type="number" class="form-control" placeholder="{{item.qtyAvailable}}">
+          </td>
+          <td><button type="button" class="btn btn-success" (click)="updateChargingPoint(item.id)">Update</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="removeChargingPoint(item.id)">Delete</button></td>
       </tr>
     </tbody>
   </table>

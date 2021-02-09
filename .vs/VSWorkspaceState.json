@@ -4,10 +4,9 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
+    "\\Client\\src\\app\\admin",
     "\\Client\\src\\app\\shared",
-    "\\Client\\src\\app\\shared\\models",
-    "\\Core\\Entities",
-    "\\Core\\Specifications"
+    "\\Client\\src\\app\\shared\\models"
   ],
   "SelectedNode": "\\Client\\src\\app\\shared\\models\\chargingPoint.ts",
   "PreviewInSolutionExplorer": false

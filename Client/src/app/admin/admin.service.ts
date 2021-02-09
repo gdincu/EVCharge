@@ -4,7 +4,7 @@ import { IUser } from '../shared/models/user';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { IBooking } from '../shared/models/booking';
-import { IChargingPoint } from '../shared/models/chargingPoint';
+import { IChargingPoint, ProductFormValues, IChargingPointToCreate } from '../shared/models/chargingPoint';
 import { BookingParams } from '../shared/models/bookingParams';
 import { PaginationBooking, IPaginationBooking } from '../shared/models/paginationBooking';
 import { StoreParams } from '../shared/models/storeParams';
@@ -111,8 +111,12 @@ export class AdminService {
     return this.http.delete(this.baseUrl + 'ChargingPoints/' + chargingPointId).subscribe();
   }
 
-   updateChargingPoint(chargingPoint: IChargingPoint) {
+  updateChargingPoint(chargingPoint: IChargingPointToCreate) {
     return this.http.put(this.baseUrl + 'ChargingPoints/' + chargingPoint.id, chargingPoint);
+  }
+
+  createChargingPoint(product: ProductFormValues) {
+    return this.http.post(this.baseUrl + 'ChargingPoints', product);
   }
 
 }
