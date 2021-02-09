@@ -62,7 +62,8 @@ export class EditChargingpointComponent implements OnInit {
 
   removeChargingPoint(chargingPointId: number) {
     if (this.adminService.removeChargingPoint(chargingPointId))
-      this._alertify.error('Charging point removed!');       
+      this._alertify.error('Charging point removed!');
+    
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate(['admin/chargingpoint']));
   }

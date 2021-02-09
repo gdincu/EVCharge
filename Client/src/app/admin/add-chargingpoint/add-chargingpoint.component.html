@@ -1,0 +1,85 @@
+<div class="form mx-5">
+  <div class="col-md-3 mb-3">
+    <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <div class="col-4">
+    <div>
+      <h2 class="text-success mb-5">Set up a new charging point</h2>
+    </div>
+    <div class="form">
+      <div class="form-group">
+        <input [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
+               id="name"
+               required
+               name="name"
+               #name
+               type="text"
+               class="form-control"
+               placeholder="Name" />
+      </div>
+      <div class="form-group">
+        <input #description
+               type="text"
+               [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
+               id="description"
+               required
+               name="description"
+               placeholder="Description"
+               class="form-control" />
+      </div>
+      <div class="form-group">
+        <input #price
+               type="number"
+               class="form-control"
+               placeholder="Price"
+               [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}"
+               required
+               id="price"
+               name="price"
+               currencyMask />
+      </div>
+      <div class="form-group">
+        <h6 class="text-success">Locations</h6>
+        <select class="form-control form-control-sm mb-3" [(ngModel)]="exampleLocation">
+          <option *ngFor="let location of chargingPointLocations"
+                  class="form-control"
+                  [ngValue]="location">
+            {{location.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <h6 class="text-success">Types</h6>
+        <select class="form-control form-control-sm mb-3" [(ngModel)]="exampleType">
+          <option *ngFor="let type of chargingPointTypes"
+                  class="form-control"
+                  [ngValue]="type">
+            {{type.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input #qtyTotal
+               type="number"
+               class="form-control"
+               placeholder="Total quantity"
+               [ngClass]="{'is-invalid': qtyTotal.invalid && (qtyTotal.dirty || qtyTotal.touched)}"
+               required
+               name="qtyTotal"
+               id="qtyTotal" />
+      </div>
+      <button (click)="onClick()" class="btn btn-outline-primary my-2">Save</button>
+    </div>
+    </div>
+  </div>
+
+
+    <!--[selected]="storeParams.sort === location.value"-->
+
+
+
+
+

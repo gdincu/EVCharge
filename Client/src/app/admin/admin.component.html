@@ -3,10 +3,21 @@
   <div class="row mb-3">
 
     <div class="card border-dark mr-3 col-md-4" style="max-width: 20rem;">
+
       <div class="card-header"><h3>Charging Points</h3></div>
       <div class="card-body">
         <div class="mb-3"><button [routerLink]="['chargingpoint/add']" class="btn btn-success btn-block">Create new charging point</button></div>
         <div class="mb-3"><button [routerLink]="['chargingpoint']" class="btn btn-info btn-block">Edit/ Delete charging point</button></div>
+      </div>
+
+      <div class="card-header"><h5>ChargingPoint Types</h5></div>
+      <div class="card-body">
+        <div class="mb-3"><button [routerLink]="['chargingpointtype']" class="btn btn-warning btn-block">Add/ Edit/ Delete types</button></div>
+      </div>
+
+      <div class="card-header"><h5>ChargingPoint Locations</h5></div>
+      <div class="card-body">
+        <div class="mb-3"><button [routerLink]="['chargingpointlocation']" class="btn btn-info btn-block">Add/ Edit/ Delete locations</button></div>
       </div>
     </div>
 
@@ -26,26 +37,8 @@
 
   </div>
 
-  <div class="row mb-3">
+  
 
-    <div class="card border-dark mr-3 col-md-6" style="max-width: 20rem;">
-      <div class="card-header"><h5>ChargingPoint Types</h5></div>
-      <div class="card-body">
-        <div class="mb-3"><button [routerLink]="['chargingpointtype']" class="btn btn-warning btn-block">Add/ Edit/ Delete types</button></div>
-      </div>
-    </div>
+ 
+    
 
-  </div>
-
-  <div class="row mb-3">
-
-    <div class="card border-dark mr-3 col-md-6" style="max-width: 20rem;">
-      <div class="card-header"><h5>ChargingPoint Locations</h5></div>
-      <div class="card-body">
-        <div class="mb-3"><button [routerLink]="['chargingpointlocation']" class="btn btn-info btn-block">Add/ Edit/ Delete locations</button></div>
-      </div>
-    </div>
-
-  </div>
-
-</div>

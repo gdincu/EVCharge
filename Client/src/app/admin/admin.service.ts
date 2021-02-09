@@ -119,7 +119,7 @@ export class AdminService {
     return this.http.put(this.baseUrl + 'ChargingPoints/' + chargingPoint.id, chargingPoint);
   }
 
-  createChargingPoint(product: ProductFormValues) {
+  createChargingPoint(product: IChargingPointToCreate) {
     return this.http.post(this.baseUrl + 'ChargingPoints', product);
   }
 

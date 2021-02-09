@@ -4,10 +4,10 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\admin",
-    "\\Client\\src\\app\\shared",
+    "\\Client\\src\\app\\account",
+    "\\Client\\src\\app\\account\\login",
     "\\Client\\src\\app\\shared\\models"
   ],
-  "SelectedNode": "\\Client\\src\\app\\shared\\models\\chargingPoint.ts",
+  "SelectedNode": "\\Client\\src\\app\\account\\login\\login.component.ts",
   "PreviewInSolutionExplorer": false
 }

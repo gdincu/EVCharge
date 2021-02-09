@@ -7,10 +7,12 @@ import { EditBookingComponent } from './edit-booking/edit-booking.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditChargingpointtypeComponent } from './edit-chargingpointtype/edit-chargingpointtype.component';
 import { EditChargingpointlocationComponent } from './edit-chargingpointlocation/edit-chargingpointlocation.component';
+import { AddChargingpointComponent } from './add-chargingpoint/add-chargingpoint.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent },
   { path: 'chargingpoint', component: EditChargingpointComponent },
+  { path: 'chargingpoint/add', component: AddChargingpointComponent },
   { path: 'booking', component: EditBookingComponent },
   { path: 'user', component: EditUserComponent },
   { path: 'chargingpointtype', component: EditChargingpointtypeComponent },

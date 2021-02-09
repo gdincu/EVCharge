@@ -51,6 +51,7 @@ export class EditChargingpointlocationComponent implements OnInit {
   createChargingPointLocation(name: string, city: string, street: string, housenumber: string, postcode: string) {
     var arr = this.chargingPointLocations;
     var temp2: IChargingPointLocation = {
+      id: arr.reduce((bestIndexSoFar, currentlyTestedValue, currentlyTestedIndex, array) => currentlyTestedValue > array[bestIndexSoFar] ? currentlyTestedIndex : bestIndexSoFar, 0),
       name: name,
       city: city,
       street: street,

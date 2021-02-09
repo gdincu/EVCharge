@@ -8,6 +8,7 @@ import { AdminComponent } from './admin.component';
 import { FormsModule } from '@angular/forms';
 import { EditChargingpointlocationComponent } from './edit-chargingpointlocation/edit-chargingpointlocation.component';
 import { EditChargingpointtypeComponent } from './edit-chargingpointtype/edit-chargingpointtype.component';
+import { AddChargingpointComponent } from './add-chargingpoint/add-chargingpoint.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EditChargingpointtypeComponent } from './edit-chargingpointtype/edit-ch
     EditUserComponent,
     EditBookingComponent,
     EditChargingpointlocationComponent,
-    EditChargingpointtypeComponent
+    EditChargingpointtypeComponent,
+    AddChargingpointComponent
   ],
   imports: [
     CommonModule,
