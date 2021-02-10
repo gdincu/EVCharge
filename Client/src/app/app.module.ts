@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { AboutModule } from './about/about.module';
 import { ContactModule } from './contact/contact.module';
 import { AlertifyService } from './shared/services/alertify.service';
+import { BookingComponent } from './booking/booking.component';
+import { BookingModule } from './booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { AlertifyService } from './shared/services/alertify.service';
     RouterModule,
     FormsModule,
     AboutModule,
-    ContactModule
+    ContactModule,
+    BookingModule
   ],
   providers: [
     HttpClientModule,

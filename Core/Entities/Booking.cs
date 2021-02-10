@@ -7,7 +7,7 @@ namespace Core.Entities
 {
     public class Booking : BaseEntity
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int ChargingPointId { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

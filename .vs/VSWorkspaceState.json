@@ -4,10 +4,12 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\account",
-    "\\Client\\src\\app\\account\\login",
+    "\\Client\\src\\app\\account\\register",
+    "\\Client\\src\\app\\booking",
+    "\\Client\\src\\app\\core\\nav-bar",
+    "\\Client\\src\\app\\shared",
     "\\Client\\src\\app\\shared\\models"
   ],
-  "SelectedNode": "\\Client\\src\\app\\account\\login\\login.component.ts",
+  "SelectedNode": "\\Client\\src\\app\\booking\\booking.component.ts",
   "PreviewInSolutionExplorer": false
 }

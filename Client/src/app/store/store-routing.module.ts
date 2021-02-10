@@ -6,7 +6,7 @@ import { ChargingPointDetailsComponent } from './chargingPoint-details/chargingP
 
 const routes: Routes = [
   { path: '', component: StoreComponent },
-  { path: ':id', component: ChargingPointDetailsComponent, data: { breadcrumb: { alias: 'chargingPointDetails' } } },
+  { path: ':id', component: ChargingPointDetailsComponent },
 ];
 
 @NgModule({

@@ -4,4 +4,7 @@ export class BookingParams {
   start: Date;
   end: Date;
   sort = 'startdatedesc';
+  search: string;
+  chargingPointId: number;
+  username: string;
 }

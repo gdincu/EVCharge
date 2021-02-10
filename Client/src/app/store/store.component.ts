@@ -12,9 +12,9 @@ import { StoreParams } from '../shared/models/storeParams';
 })
 export class StoreComponent implements OnInit {
   @ViewChild('search', { static: false }) searchTerm: ElementRef;
-  chargingPoints: IChargingPoint[];
-  chargingPointLocations: IChargingPointLocation[];
-  chargingPointTypes: IChargingPointType[];
+  chargingPoints: IChargingPoint[] = [];
+  chargingPointLocations: IChargingPointLocation[] = [];
+  chargingPointTypes: IChargingPointType[] = [];
   totalCount: number;
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },

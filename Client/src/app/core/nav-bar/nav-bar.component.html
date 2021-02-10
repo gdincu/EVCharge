@@ -7,7 +7,7 @@
     <a class="p-2 text-success" routerLink="/store">Charging Points</a>
     <a class="p-2">|</a>
     <!--Only displayed after logging in-->
-    <a class="p-2 text-success" *ngIf="(currentUser$ | async)" routerLink="/">Bookings</a>
+    <a class="p-2 text-success" *ngIf="(currentUser$ | async)" routerLink="/bookings">Bookings</a>
     <!--Only displayed if the logged in user is an admin-->
     <a *ngIf="(currentUser$ | async) && (currentUser$ | async).username == 'CCC'" class="p-2">|</a>
     <!--Only displayed if the logged in user is an admin-->
