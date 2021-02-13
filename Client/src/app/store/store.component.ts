@@ -7,6 +7,9 @@ import { StoreParams } from '../shared/models/storeParams';
 import { AlertifyService } from '../shared/services/alertify.service';
 import { Router } from '@angular/router';
 import { BookingService } from '../booking/booking.service';
+import { Observable } from 'rxjs';
+import { IUser } from '../shared/models/user';
+import { AccountService } from '../account/account.service';
 
 @Component({
   selector: 'app-store',
@@ -19,6 +22,8 @@ export class StoreComponent implements OnInit {
   chargingPointLocations: IChargingPointLocation[] = [];
   chargingPointTypes: IChargingPointType[] = [];
   totalCount: number;
+  closeResult: string;
+  currentUser$: Observable<IUser>;
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },
     { name: 'Price: Asc', value: 'priceAsc' },
@@ -33,6 +38,7 @@ export class StoreComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private bookingService: BookingService,
+    private accountService: AccountService,
     private _alertify: AlertifyService,
     private router: Router
   ) {
@@ -40,6 +46,7 @@ export class StoreComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser$ = this.accountService.currentUser$;
     this.getChargingPoints(true);
     this.getChargingPointLocations();
     this.getChargingPointTypes();
@@ -117,7 +124,7 @@ export class StoreComponent implements OnInit {
     this.getChargingPoints();
   }
 
-  book(chargingPointId: number) {
+  createBooking(chargingPointId: number) {
     this.storeService.getChargingPoints(false).subscribe(x => {
       if (x.data.find(y => y.id == chargingPointId).qtyAvailable == 0)
         this._alertify.error('Insufficient quantity available!');

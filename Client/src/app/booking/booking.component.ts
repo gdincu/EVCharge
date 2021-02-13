@@ -44,6 +44,7 @@ export class BookingComponent implements OnInit {
     this.bookingService.getBookings(useCache).subscribe(response => {
       this.bookings = response.data;
       this.totalCount = this.bookings.length;
+      console.log(this.totalCount);
     }, error => {
       console.log(error);
     });

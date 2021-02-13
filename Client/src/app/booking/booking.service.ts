@@ -36,8 +36,10 @@ export class BookingService {
     if (useCache === false) {
       this.bookings = [];
     }
-
-    this.accountService.currentUser$.subscribe(x => this.currentUserEmail = x.email);
+      this.accountService.currentUser$.subscribe(x => {
+        if(x != null)
+         this.currentUserEmail = x.email;
+      });
     //console.log(this.currentUserEmail);
     this.getUsers().subscribe(x => this.currentUserId = x.find(y => y.email == this.currentUserEmail).id);
     //console.log(this.currentUserId);

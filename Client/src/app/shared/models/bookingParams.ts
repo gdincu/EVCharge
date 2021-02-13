@@ -1,6 +1,6 @@
 export class BookingParams {
   pageNumber = 1;
-  pageSize = 6;
+  pageSize = 20;
   start: Date;
   end: Date;
   sort = 'startdatedesc';

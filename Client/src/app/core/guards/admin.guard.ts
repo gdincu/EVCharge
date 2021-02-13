@@ -14,11 +14,11 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
-    return this.accountService.isAdmin$.pipe(
-      map(admin => {
-        if (admin) {
+    return this.accountService.currentUser$.pipe(
+      map(user => {
+        console.log(user.email);
+        if (user.email.includes('admin'))
           return true;
-        }
         this.router.navigateByUrl('/');
       })
     );
