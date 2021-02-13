@@ -124,4 +124,12 @@ export class BookingService {
     );
   }
 
+  removeBooking(bookingId: number) {
+    return this.http.delete(this.baseUrl + 'Bookings/' + bookingId).subscribe();
+  }
+
+  createBooking(chargingPointId: number) {
+    return 1;
+  }
+
 }

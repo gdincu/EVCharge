@@ -58,9 +58,11 @@
               <p class="card-text">Type: {{item.chargingPointType}}</p>
               <p class="card-text">Available: {{item.qtyAvailable}}</p>
             </div>
+            <div>
+              <button class="badge badge-pill badge-success" (click)="book(item.id)">Book</button>
+            </div>
           </div>
           
-
       </div>
 
       <div class="d-flex justify-content-center" *ngIf="totalCount > 0">

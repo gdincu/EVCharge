@@ -4,7 +4,8 @@ import { IBooking } from '../shared/models/booking';
 import { BookingParams } from '../shared/models/bookingParams';
 import { BookingService } from './booking.service';
 import { AccountService } from '../account/account.service';
-import { tap } from 'rxjs/operators';
+import { AlertifyService } from '../shared/services/alertify.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -28,7 +29,9 @@ export class BookingComponent implements OnInit {
 
   constructor(
     private bookingService: BookingService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private _alertify: AlertifyService,
+    private router: Router
   ) {
     this.bookingParams = this.bookingService.getBookingParams();
   }
@@ -77,6 +80,13 @@ export class BookingComponent implements OnInit {
     this.bookingParams = new BookingParams();
     this.bookingService.setBookingParams(this.bookingParams);
     this.getBookings(false);
+  }
+
+  removeBooking(bookingId: number) {
+    if (this.bookingService.removeBooking(bookingId))
+      this._alertify.error('Booking removed!');
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['/bookings']));
   }
   
   }

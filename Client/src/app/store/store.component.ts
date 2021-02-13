@@ -4,6 +4,9 @@ import { IChargingPoint } from '../shared/models/chargingPoint';
 import { IChargingPointLocation } from '../shared/models/chargingPointLocation';
 import { IChargingPointType } from '../shared/models/chargingPointType';
 import { StoreParams } from '../shared/models/storeParams';
+import { AlertifyService } from '../shared/services/alertify.service';
+import { Router } from '@angular/router';
+import { BookingService } from '../booking/booking.service';
 
 @Component({
   selector: 'app-store',
@@ -27,7 +30,12 @@ export class StoreComponent implements OnInit {
   ];
   storeParams: StoreParams;
 
-  constructor(private storeService: StoreService) {
+  constructor(
+    private storeService: StoreService,
+    private bookingService: BookingService,
+    private _alertify: AlertifyService,
+    private router: Router
+  ) {
     this.storeParams = this.storeService.getStoreParams();
   }
 
@@ -107,6 +115,20 @@ export class StoreComponent implements OnInit {
     this.storeParams = new StoreParams();
     this.storeService.setStoreParams(this.storeParams);
     this.getChargingPoints();
+  }
+
+  book(chargingPointId: number) {
+    this.storeService.getChargingPoints(false).subscribe(x => {
+      if (x.data.find(y => y.id == chargingPointId).qtyAvailable == 0)
+        this._alertify.error('Insufficient quantity available!');
+      else if (this.bookingService.createBooking(chargingPointId))
+        this._alertify.success('Booking completed!');
+      else
+        this._alertify.error('Booking could not be completed! Please try again and if the error persists contact our support service!');
+    });
+    //Navigating back to the store component
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['/store']));
   }
 
 }

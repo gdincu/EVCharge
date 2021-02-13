@@ -33,14 +33,16 @@
 
       <div class="row">
         <div class="card col-4 mb-3 border-0" *ngFor="let item of bookings">
+          <div class="card-header">Booking {{item.id}}</div>
           <div class="card-body">
             <h6 class="card-title">Start: {{item.start}}</h6>
             <h6 class="card-title">End: {{item.end}}</h6>
             <p class="card-text">£{{item.price}}</p>
           </div>
+          <div>
+            <button class="badge badge-pill badge-danger" (click)="removeBooking(item.id)">Delete</button>
+          </div>
         </div>
-
-
       </div>
 
       <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
