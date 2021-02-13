@@ -2,8 +2,7 @@
   <div class="row">
 
     <section class="col-2">
-      <ng-container *ngIf="chargingPoints && users">
-
+      <ng-container>
         <h6 class="text-success ml-1 mt-4 mb-3">Sort</h6>
         <select class="form-control form-control-sm mb-3" (change)="onSortSelected($event.target.value)">
           <option *ngFor="let sort of sortOptions"
@@ -12,7 +11,6 @@
             {{sort.name}}
           </option>
         </select>
-
       </ng-container>
     </section>
 
@@ -26,8 +24,8 @@
         </app-paging-header>
 
         <div class="form-inline" *ngIf="bookings">
-          <input class="form-control mr-2" #start style="width: 300px" type="datetime-local">
-          <input class="form-control mr-2" #end style="width: 300px" type="datetime-local">
+          <input class="form-control mr-2" #start style="width: 200px" type="datetime-local">
+          <input class="form-control mr-2" #end style="width: 200px" type="datetime-local">
           <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
           <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>
         </div>

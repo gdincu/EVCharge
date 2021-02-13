@@ -48,7 +48,6 @@ export class AccountService {
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
-          localStorage.setItem('email', user.email);
           this.currentUserSource.next(user);
           this.isAdminSource.next(this.isAdmin(user.token));
         }
@@ -61,7 +60,6 @@ export class AccountService {
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
-          localStorage.setItem('email', user.email);
           this.currentUserSource.next(user);
           this.isAdminSource.next(this.isAdmin(user.token));
         }
@@ -74,7 +72,6 @@ export class AccountService {
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);
-          localStorage.setItem('email', user.email);
           this.currentUserSource.next(user);
         }
       })
@@ -83,7 +80,6 @@ export class AccountService {
 
   logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('email');
     this.currentUserSource.next(null);
     this.isAdminSource.next(false);
     this.router.navigateByUrl('/');

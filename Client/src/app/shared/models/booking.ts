@@ -1,5 +1,5 @@
 export interface IBooking {
-  id: number;
+  id: string;
   userId: string;
   chargingPointId: number;
   start: string;

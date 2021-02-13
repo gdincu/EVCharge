@@ -5,3 +5,10 @@ export interface IUser {
   password: string;
   token: string;
 }
+
+export interface IUserToReturn {
+  id: string;
+  email: string;
+}
+
+

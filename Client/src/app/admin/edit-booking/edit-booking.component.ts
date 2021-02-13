@@ -56,7 +56,7 @@ export class EditBookingComponent implements OnInit {
       this.router.navigate(['admin/booking']));
   }
 
-  updateBooking(bookingId: number): void {
+  updateBooking(bookingId: string): void {
     if(this.adminService.updateBooking(this.bookings.filter(obj => obj.id == bookingId)[0])
       .subscribe())
       this._alertify.success('Booking details updated!');
