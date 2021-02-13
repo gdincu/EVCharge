@@ -124,18 +124,4 @@ export class StoreComponent implements OnInit {
     this.getChargingPoints();
   }
 
-  createBooking(chargingPointId: number) {
-    this.storeService.getChargingPoints(false).subscribe(x => {
-      if (x.data.find(y => y.id == chargingPointId).qtyAvailable == 0)
-        this._alertify.error('Insufficient quantity available!');
-      else if (this.bookingService.createBooking(chargingPointId))
-        this._alertify.success('Booking completed!');
-      else
-        this._alertify.error('Booking could not be completed! Please try again and if the error persists contact our support service!');
-    });
-    //Navigating back to the store component
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate(['/store']));
-  }
-
 }

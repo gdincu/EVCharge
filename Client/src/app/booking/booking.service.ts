@@ -130,7 +130,7 @@ export class BookingService {
     return this.http.delete(this.baseUrl + 'Bookings/' + bookingId).subscribe();
   }
 
-  createBooking(chargingPointId: number) {
+  createBooking(chargingPointId: number,start: Date,end: Date) {
     return 1;
   }
 
