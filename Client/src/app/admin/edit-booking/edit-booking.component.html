@@ -3,9 +3,9 @@
     <div class="col-md-3">
       <button type="button" class="btn btn-warning" routerLink="/admin">Admin Panel</button>
     </div>
-    <div *ngIf="bookings" class="col-md-7 ml-2">
-      <input class="form-control mr-2" #start style="width: 300px" type="datetime-local">
-      <input  class="form-control mr-2" #end style="width: 300px" type="datetime-local">
+    <div *ngIf="bookings" class="col-md-7">
+      Start >=<input class="form-control mr-1" #start style="width: 300px" type="datetime-local">
+      <input  class="form-control mr-1" #end style="width: 300px" type="datetime-local"><= End
       <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
       <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>
     </div>
@@ -16,8 +16,8 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Start</th>
-        <th scope="col">End</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
         <th scope="col">Price</th>
         <th scope="col">Creation Date</th>
         <th scope="col"></th>
@@ -27,10 +27,10 @@
     <tbody>
       <tr class="table-light" *ngFor="let booking of bookings">
         <td class="form-group">
-          <input [(ngModel)]="booking.start" type="datetime-local" class="form-control" placeholder="{{booking.start}}">
+          <input [(ngModel)]="booking.start" type="datetime-local" class="form-control" placeholder="{{booking.start}}" disabled>
         </td>
         <td class="form-group">
-          <input [(ngModel)]="booking.end" type="datetime-local" class="form-control" placeholder="{{booking.end}}">
+          <input [(ngModel)]="booking.end" type="datetime-local" class="form-control" placeholder="{{booking.end}}" disabled>
         </td>
         <td class="form-group">
           <input [(ngModel)]="booking.price" type="number" class="form-control" placeholder="{{booking.price}}">

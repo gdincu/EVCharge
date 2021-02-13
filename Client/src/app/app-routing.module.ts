@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { BookingComponent } from './booking/booking.component';
 import { AdminGuard } from './core/guards/admin.guard';
+import { ChargingPointItemComponent } from './store/charging-point-item/charging-point-item.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'store',
     component: StoreComponent
+  },
+  {
+    path: 'store/:id',
+    canActivate: [AuthGuard],
+    component: ChargingPointItemComponent
   },
   {
     path: 'bookings',

@@ -42,16 +42,12 @@ export class EditChargingpointComponent implements OnInit {
     this.getChargingPoints(true);
     const chargingPointLocations = this.getChargingPointLocations();
     const chargingPointTypes = this.getChargingPointTypes();
-
-    forkJoin([chargingPointLocations, chargingPointTypes]).subscribe(results => {
-      this.chargingPointLocations = results[0];
-      this.chargingPointTypes = results[1];
-    }, error => {
-      console.log(error);
-    });
   }
 
   getChargingPoints(useCache = false) {
+    let params = this.storeService.getStoreParams();
+    params.pageSize = 9999999;
+    this.storeService.setStoreParams(params);
     this.storeService.getChargingPoints(useCache).subscribe(response => {
       this.chargingPoints = response.data;
     }, error => {

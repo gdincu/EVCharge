@@ -51,8 +51,8 @@
 
       <div class="row">
         <div class="card col-4 mb-3 border-0" *ngFor="let item of chargingPoints">
-          <div class="card-header">{{item.name}}</div>
-          <div class="card-body">
+          <div class="card-header" routerLink="/store/{{item.id}}">{{item.name}}</div>
+          <div class="card-body" routerLink="/store/{{item.id}}">
             <h4 class="card-title">{{item.chargingpointlocation}}</h4>
             <h6 class="card-title">Price: £{{item.price}}</h6>
             <p class="card-text">Location: {{item.chargingPointLocation}}</p>
@@ -60,8 +60,7 @@
             <p class="card-text">Available: {{item.qtyAvailable}}</p>
           </div>
           <div *ngIf="(currentUser$ | async)">
-            <button class="badge badge-pill badge-success" *ngIf="item.qtyAvailable > 0" (click)="createBooking(item.id)">Book</button>
-            <button class="badge badge-pill" *ngIf="item.qtyAvailable == 0" disabled>Book</button>
+            <button class="badge badge-pill badge-success" routerLink="/store/{{item.id}}">Book</button>
           </div>
         </div>
       </div>

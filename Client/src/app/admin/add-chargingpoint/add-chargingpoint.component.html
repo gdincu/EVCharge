@@ -61,25 +61,7 @@
           </option>
         </select>
       </div>
-      <div class="form-group">
-        <input #qtyTotal
-               type="number"
-               class="form-control"
-               placeholder="Total quantity"
-               [ngClass]="{'is-invalid': qtyTotal.invalid && (qtyTotal.dirty || qtyTotal.touched)}"
-               required
-               name="qtyTotal"
-               id="qtyTotal" />
-      </div>
       <button (click)="onClick()" class="btn btn-outline-primary my-2">Save</button>
     </div>
     </div>
   </div>
-
-
-    <!--[selected]="storeParams.sort === location.value"-->
-
-
-
-
-

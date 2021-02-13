@@ -23,7 +23,6 @@ export class AddChargingpointComponent implements OnInit {
   @ViewChild('name', { static: false }) name: ElementRef;
   @ViewChild('description', { static: false }) description: ElementRef;
   @ViewChild('price', { static: false }) price: ElementRef;
-  @ViewChild('qtyTotal', { static: false }) qtyTotal: ElementRef;
 
   constructor(
     private storeService: StoreService,
@@ -73,15 +72,18 @@ export class AddChargingpointComponent implements OnInit {
       price: +this.price.nativeElement.value,
       chargingPointTypeId: +this.exampleType.id,
       chargingPointLocationId: +this.exampleLocation.id,
-      qtyTotal: +this.qtyTotal.nativeElement.value,
-      qtyAvailable: +this.qtyTotal.nativeElement.value
+      qtyAvailable: 1,
+      qtyTotal: 1
     }
+
+    console.log(temp);
 
     if (this.adminService.createChargingPoint(temp).subscribe()) {
       this._alertify.success('ChargingPoint created!');
       this.router.navigateByUrl('/', { skipLocationChange: false }).then(() =>
         this.router.navigate(['admin/chargingpoint']));
-    } else {
+    } else
+    {
       this._alertify.error('ChargingPoint not created! Please review form data!');
       this.router.navigateByUrl('/', { skipLocationChange: false }).then(() =>
         this.router.navigate(['admin/chargingpoint/add']));
