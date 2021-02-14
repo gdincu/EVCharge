@@ -6,6 +6,8 @@ import { BookingService } from './booking.service';
 import { AccountService } from '../account/account.service';
 import { AlertifyService } from '../shared/services/alertify.service';
 import { Router } from '@angular/router';
+import { IChargingPoint } from '../shared/models/chargingPoint';
+import { StoreService } from '../store/store.service';
 
 @Component({
   selector: 'app-booking',
@@ -16,6 +18,7 @@ export class BookingComponent implements OnInit {
   @ViewChild('start', { static: false }) start: ElementRef;
   @ViewChild('end', { static: false }) end: ElementRef;
   bookings: IBooking[] = [];
+  chargingPoints: IChargingPoint[] = [];
   users: IUser[] = [];
   totalCount: number;
   
@@ -30,6 +33,7 @@ export class BookingComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     private accountService: AccountService,
+    private storeService: StoreService,
     private _alertify: AlertifyService,
     private router: Router
   ) {
@@ -38,6 +42,8 @@ export class BookingComponent implements OnInit {
 
   ngOnInit() {   
     this.getBookings(false);
+    this.storeService.getChargingPoints(false).subscribe(x => this.chargingPoints = x.data);
+    console.log(this.chargingPoints);
   }
 
   getBookings(useCache = false) {

@@ -19,6 +19,8 @@ export class ChargingPointItemComponent implements OnInit {
   type: string;
   @ViewChild('start', { static: false }) start: ElementRef;
   @ViewChild('end', { static: false }) end: ElementRef;
+  startDate: Date;
+  endDate: Date;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -41,21 +43,22 @@ export class ChargingPointItemComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+    
   }
 
   book() {
     //Reads start and end values from the form input fields
-    let start = this.start.nativeElement.value;
-    let end = this.end.nativeElement.value;
+    this.startDate = this.start.nativeElement.value;
+    this.endDate = this.end.nativeElement.value;
 
-    if (!start || !end) {
+    if (!this.startDate || !this.endDate) {
       this._alertify.error('Both start and end dates need to be filled in!');
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>  
         this.router.navigate(['/store/' + this.item.id]));
       return;
     }
 
-    if (start > end) {
+    if (this.startDate > this.endDate) {
       this._alertify.error('End date cannot be before start date! Try again!');
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
         this.router.navigate(['/store/' + this.item.id]));
@@ -64,7 +67,7 @@ export class ChargingPointItemComponent implements OnInit {
 
     //Checks the availability of a specific chargingpoint based on start and end dates
     //TBC
-    this.storeService.checkAvailability(this.item.id, start, end);
+    this.storeService.checkAvailability(this.item.id, this.startDate, this.endDate);
     //TBC
     console.log('availableFlag: ' + this.storeService.availableFlag);
     //TBC
@@ -77,7 +80,7 @@ export class ChargingPointItemComponent implements OnInit {
     }
 
     //OK
-    if (this.storeService.createBooking(this.item.id, start, end).subscribe()) {
+    if (this.storeService.createBooking(this.item.id, this.startDate, this.endDate).subscribe()) {
       this._alertify.success('Booking completed!');
       //Navigating back to the store component
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>

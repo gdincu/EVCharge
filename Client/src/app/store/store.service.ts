@@ -22,7 +22,7 @@ export class StoreService {
   chargingPointTypes: IChargingPointType[] = [];
   pagination = new Pagination();
   storeParams = new StoreParams();
-  availableFlag: boolean;
+  availableFlag: boolean = true;
 
   constructor(
     private http: HttpClient,
@@ -124,7 +124,6 @@ export class StoreService {
       //When there are no bookings made for the chargingPointId provided
       if (tempData.length == 0) {
         this.availableFlag = true;
-        console.log('availableFlag: '+this.availableFlag);
         return this.availableFlag;
 
       }
@@ -186,6 +185,10 @@ export class StoreService {
 
     console.log(tempBooking);
     console.log(this.baseUrl + 'Bookings');
+
+    //if (this.adminService.createChargingPointType(temp2).subscribe())
+
+    console.log('createBooking availableFlag: ' + this.availableFlag);
 
     return this.http.post(this.baseUrl + 'Bookings', tempBooking);
   }

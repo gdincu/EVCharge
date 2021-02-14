@@ -38,6 +38,9 @@
             <h6 class="card-title">Start: {{item.start}}</h6>
             <h6 class="card-title">End: {{item.end}}</h6>
             <p class="card-text">£{{item.price}}</p>
+            <div *ngFor="let x of chargingPoints">
+              <p class="card-text">{{x.chargingPoint}}</p>
+            </div>
           </div>
           <div>
             <button class="badge badge-pill badge-danger" (click)="removeBooking(item.id)">Delete</button>

@@ -4,8 +4,9 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\store"
+    "\\Client\\src\\app\\store",
+    "\\Client\\src\\app\\store\\charging-point-item"
   ],
-  "SelectedNode": "\\Client\\src\\app\\store\\store.component.html",
+  "SelectedNode": "\\Client\\src\\app\\store\\charging-point-item\\charging-point-item.component.ts",
   "PreviewInSolutionExplorer": false
 }
