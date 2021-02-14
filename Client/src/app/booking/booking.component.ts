@@ -43,7 +43,7 @@ export class BookingComponent implements OnInit {
   ngOnInit() {   
     this.getBookings(false);
     this.storeService.getChargingPoints(false).subscribe(x => this.chargingPoints = x.data);
-    console.log(this.chargingPoints);
+    //console.log(this.chargingPoints);
   }
 
   getBookings(useCache = false) {

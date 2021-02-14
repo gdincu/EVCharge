@@ -30,7 +30,15 @@ export class BookingService {
   constructor(
     private http: HttpClient,
     private accountService: AccountService
-  ) {  }
+  ) {
+    this.accountService.currentUser$.subscribe(x => {
+      if (x != null)
+        this.currentUserEmail = x.email;
+    });
+    //console.log(this.currentUserEmail);
+    this.getUsers().subscribe(x => this.currentUserId = x.find(y => y.email == this.currentUserEmail).id);
+    //console.log(this.currentUserId);
+  }
 
   getBookings(useCache: boolean) {
     if (useCache === false) {

@@ -22,7 +22,8 @@ export class StoreService {
   chargingPointTypes: IChargingPointType[] = [];
   pagination = new Pagination();
   storeParams = new StoreParams();
-  availableFlag: boolean = true;
+  availableFlag: boolean;
+  //availableFlag: boolean = true;
 
   constructor(
     private http: HttpClient,
@@ -116,54 +117,39 @@ export class StoreService {
     );
   }
 
+  //checkAvailability
   checkAvailability(chargingPointId: number, start: Date, end: Date) {
 
-    this.bookingService.getBookings(false).subscribe(x => {
-      const tempData = x.data.filter(y => y.chargingPointId == chargingPointId);
+    let tempData: IBooking[] = []; 
+
+    this.bookingService.getBookings(true).subscribe(x => {
+      tempData = x.data.filter(y => y.chargingPointId == chargingPointId);
+    });
+
+    console.log(tempData);
 
       //When there are no bookings made for the chargingPointId provided
       if (tempData.length == 0) {
         this.availableFlag = true;
-        return this.availableFlag;
-
+        console.log('checkAvailability: No bookings made for this chargingPointId');
+        return true;
       }
 
       //When there are bookings made for the chargingPointId provided with a start date <= start and start >= enddate <= end
-      let temp1: any = tempData.filter(item => {
-        item.start <= start.toString() &&
-          item.end >= start.toString() &&
-          item.end <= end.toString()
+      tempData.forEach(item => {
+        if ((start.toString() >= item.start && start.toString() <= item.end) ||
+          (end.toString() >= item.start && end.toString() <= item.end) ||
+          (item.start >= start.toString() && item.start >= end.toString())) {
+          this.availableFlag = false;
+          return false;
+        }
+        else {
+          this.availableFlag = true;
+          return true;
+        }
       });
-      //////////////////////////
-      console.log('TEMP1: ');
-      temp1.forEach(x => console.log(x));
-      //////////////////////////
-      if (temp1.length > 0) {
-        console.log('ROUTE1');
-        this.availableFlag = false;
-        return false;
-      }
 
-      //When there are bookings made for the chargingPointId provided with a start date <= start and start >= enddate <= end
-      let temp2 = tempData.filter(item => {
-        console.log(item.end);
-        console.log(end.toString());
-        item.end >= end.toString() &&
-          item.start >= start.toString()
-          //&&         item.start <= end.toString()
-      });
-      //////////////////////////
-      console.log('TEMP1: ');
-      temp2.forEach(x => console.log(x));
-      //////////////////////////
-      if (temp2.length > 0) {
-        console.log('ROUTE2');
-        this.availableFlag = false;
-        return false;
-      }
-
-    });
-  }
+    }
 
   createBooking(chargingPointId: number, start: Date, end: Date) {
     this.checkAvailability(chargingPointId, start, end);
@@ -183,8 +169,9 @@ export class StoreService {
       CreatedTimestamp: new Date().toISOString().slice(0, 16)
     }
 
+    console.log('storeService.createBooking: Booking:');
     console.log(tempBooking);
-    console.log(this.baseUrl + 'Bookings');
+    
 
     //if (this.adminService.createChargingPointType(temp2).subscribe())
 

@@ -157,11 +157,11 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(Booking booking)
         {
-            if(_chargingPointRepository.GetItemByIdAsync(booking.ChargingPointId).Result.QtyAvailable == 0)
-                return BadRequest("Insufficient qty available");
-            else
+            //if(_chargingPointRepository.GetItemByIdAsync(booking.ChargingPointId).Result.QtyAvailable == 0)
+            //    return BadRequest("Insufficient qty available");
+            //else
                 //Decrease the Qty available
-                _chargingPointRepository.GetItemByIdAsync(booking.ChargingPointId).Result.QtyAvailable--;
+                //_chargingPointRepository.GetItemByIdAsync(booking.ChargingPointId).Result.QtyAvailable--;
 
             await _bookingRepository.CreateItemAsync(booking);          
 

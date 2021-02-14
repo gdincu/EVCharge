@@ -66,12 +66,10 @@ export class ChargingPointItemComponent implements OnInit {
     }
 
     //Checks the availability of a specific chargingpoint based on start and end dates
+    console.log('availableFlag: ' + this.storeService.checkAvailability(this.item.id, this.startDate, this.endDate));
+    
     //TBC
-    this.storeService.checkAvailability(this.item.id, this.startDate, this.endDate);
-    //TBC
-    console.log('availableFlag: ' + this.storeService.availableFlag);
-    //TBC
-    if (!this.storeService.availableFlag) {
+     if (!this.storeService.availableFlag) {
       this._alertify.error('Booking could not be completed due to insufficient qty on the selected dates! Please try again using different start & end dates!');
       //Navigating back to the store component
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
