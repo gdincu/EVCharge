@@ -10,6 +10,7 @@ import { StoreService } from '../../store/store.service';
 import { IChargingPointLocation } from '../../shared/models/chargingPointLocation';
 import { IChargingPointType } from '../../shared/models/chargingPointType';
 import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-chargingpoint',
@@ -116,11 +117,11 @@ export class EditChargingpointComponent implements OnInit {
   }
 
   getChargingPointLocations() {
-    return this.storeService.getChargingPointLocations();
+    this.storeService.getChargingPointLocations().subscribe(x => this.chargingPointLocations = x);
   }
 
   getChargingPointTypes() {
-    return this.storeService.getChargingPointTypes();
+    this.storeService.getChargingPointTypes().subscribe(x => this.chargingPointTypes = x);
   }
 
 }

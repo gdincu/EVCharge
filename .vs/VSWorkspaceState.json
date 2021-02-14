@@ -4,9 +4,8 @@
     "\\Client",
     "\\Client\\src",
     "\\Client\\src\\app",
-    "\\Client\\src\\app\\shared\\models",
-    "\\Core\\Entities"
+    "\\Client\\src\\app\\store"
   ],
-  "SelectedNode": "\\Client\\src\\app\\store",
+  "SelectedNode": "\\Client\\src\\app\\store\\store.component.html",
   "PreviewInSolutionExplorer": false
 }

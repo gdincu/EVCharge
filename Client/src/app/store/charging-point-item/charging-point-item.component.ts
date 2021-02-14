@@ -33,40 +33,63 @@ export class ChargingPointItemComponent implements OnInit {
     this.loadItem();
   }
 
+  loadItem() {
+    this.storeService.getChargingPoint(+this.activateRoute.snapshot.paramMap.get('id')).subscribe(item => {
+      this.item = item;
+      this.location = this.item.chargingPointLocation;
+      this.type = this.item.chargingPointType;
+    }, error => {
+      console.log(error);
+    });
+  }
+
   book() {
     //Reads start and end values from the form input fields
     let start = this.start.nativeElement.value;
     let end = this.end.nativeElement.value;
 
+    if (!start || !end) {
+      this._alertify.error('Both start and end dates need to be filled in!');
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>  
+        this.router.navigate(['/store/' + this.item.id]));
+      return;
+    }
+
+    if (start > end) {
+      this._alertify.error('End date cannot be before start date! Try again!');
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/store/' + this.item.id]));
+      return;
+    }
+
     //Checks the availability of a specific chargingpoint based on start and end dates
-    if (this.checkAvailability(this.item.id,start,end))
-      if (this.bookingService.createBooking(this.item.id, start, end))
-        this._alertify.success('Booking completed!');
-      else
-        this._alertify.error('Booking could not be completed! Please try again and if the error persists contact our support service!');
-    //Navigating back to the store component
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate(['/bookings']));
-  }
+    //TBC
+    this.storeService.checkAvailability(this.item.id, start, end);
+    //TBC
+    console.log('availableFlag: ' + this.storeService.availableFlag);
+    //TBC
+    if (!this.storeService.availableFlag) {
+      this._alertify.error('Booking could not be completed due to insufficient qty on the selected dates! Please try again using different start & end dates!');
+      //Navigating back to the store component
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/store/' + this.item.id]));
+      return;
+    }
 
-  loadItem() {
-    this.storeService.getChargingPoint(+this.activateRoute.snapshot.paramMap.get('id')).subscribe(item => {
-      this.item = item;
-      //this.bcService.set('@productDetails', product.name);
-    }, error => {
-      console.log(error);
-    });
+    //OK
+    if (this.storeService.createBooking(this.item.id, start, end).subscribe()) {
+      this._alertify.success('Booking completed!');
+      //Navigating back to the store component
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/store']));
+    }
+    else {
+      this._alertify.error('Booking could not be completed! Please try again and if the error persists contact our support service!');
+      //Navigating back to the store component
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['/store/' + this.item.id]));
+    }
 
-    ////////////////////GET LOCATION NAME
-    this.location = 'LOCATION1';
-    ////////////////////GET TYPE NAME
-    this.type = 'TYPE1';
-  }
-
-  checkAvailability(chargingPointId: number, start: Date, end: Date) {
-    ////////////////////this.storeService.getChargingPoints(false).subscribe(x => {
-    ////////////////////if (x.data.find(y => y.id == chargingPointId).qtyAvailable == 0)
-    return true;
   }
 
 }

@@ -84,13 +84,13 @@ export class BookingService {
           //ok console.log(this.bookings);
           response.body.data = this.bookings;
           this.pagination = response.body;
-          console.log(this.pagination);
+          //console.log(this.pagination);
           return this.pagination;
         })
       );
   }
 
-  getBooking(id: string) {
+  getBooking(id: number) {
     const booking = this.bookings.find(p => p.id === id);
 
     if (booking) {
@@ -128,10 +128,6 @@ export class BookingService {
 
   removeBooking(bookingId: number) {
     return this.http.delete(this.baseUrl + 'Bookings/' + bookingId).subscribe();
-  }
-
-  createBooking(chargingPointId: number,start: Date,end: Date) {
-    return 1;
   }
 
 }

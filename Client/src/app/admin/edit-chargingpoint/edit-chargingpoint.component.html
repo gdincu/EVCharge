@@ -17,6 +17,8 @@
         <th scope="col">Name</th>
         <th scope="col">Price</th>
         <th scope="col">Description</th>
+        <th scope="col">Total</th>
+        <th scope="col">Available</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
@@ -31,6 +33,12 @@
         </td>
         <td class="form-group">
           <input [(ngModel)]="item.description" type="text" class="form-control" placeholder="{{item.description}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.qtyTotal" type="number" class="form-control" placeholder="{{item.qtyTotal}}">
+        </td>
+        <td class="form-group">
+          <input [(ngModel)]="item.qtyAvailable" type="number" class="form-control" placeholder="{{item.qtyAvailable}}">
         </td>
         <td><button type="button" class="btn btn-success" (click)="updateChargingPoint(item.id)">Update</button></td>
         <td><button type="button" class="btn btn-danger" (click)="removeChargingPoint(item.id)">Delete</button></td>
