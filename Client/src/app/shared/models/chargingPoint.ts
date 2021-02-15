@@ -5,8 +5,6 @@ export interface IChargingPoint {
   price: number;
   chargingPointLocation: string;
   chargingPointType: string;
-  qtyTotal: number;
-  qtyAvailable: number;
 }
 
 export interface IChargingPointToCreate {
@@ -16,8 +14,6 @@ export interface IChargingPointToCreate {
   price: number;
   chargingPointLocationId: number;
   chargingPointTypeId: number;
-  qtyTotal: number;
-  qtyAvailable: number;
 }
 
 export class ProductFormValues implements IChargingPointToCreate {
@@ -27,8 +23,6 @@ export class ProductFormValues implements IChargingPointToCreate {
   price = 0;
   chargingPointLocationId: number;
   chargingPointTypeId: number;
-  qtyTotal: number;
-  qtyAvailable: number;
 
   constructor(init?: ProductFormValues) {
     Object.assign(this, init);

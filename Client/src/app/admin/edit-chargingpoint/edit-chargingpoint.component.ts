@@ -73,8 +73,6 @@ export class EditChargingpointComponent implements OnInit {
       description: temp1.description,
       name: temp1.name,
       price: temp1.price,
-      qtyAvailable: temp1.qtyAvailable,
-      qtyTotal: temp1.qtyTotal,
       chargingPointLocationId: this.chargingPointLocations.find(x => x.name === temp1.chargingPointLocation).id,
       chargingPointTypeId: this.chargingPointTypes.find(x => x.name === temp1.chargingPointType).id
     }

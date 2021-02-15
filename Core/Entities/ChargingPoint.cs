@@ -14,7 +14,5 @@ namespace Core.Entities
         public ChargingPointType ChargingPointType { get; set; }
         public int ChargingPointTypeId { get; set; }
         public decimal Price { get; set; }
-        public int QtyTotal { get; set; }
-        public int QtyAvailable { get; set; }
     }
 }

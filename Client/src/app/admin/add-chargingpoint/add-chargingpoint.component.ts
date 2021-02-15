@@ -71,9 +71,7 @@ export class AddChargingpointComponent implements OnInit {
       description: this.description.nativeElement.value,
       price: +this.price.nativeElement.value,
       chargingPointTypeId: +this.exampleType.id,
-      chargingPointLocationId: +this.exampleLocation.id,
-      qtyAvailable: 1,
-      qtyTotal: 1
+      chargingPointLocationId: +this.exampleLocation.id
     }
 
     console.log(temp);
